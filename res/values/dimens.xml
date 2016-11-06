@@ -1,0 +1,15 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    
+    <dimen name="breadcrumb_text_size">20dp</dimen>
+    
+    <dimen name="graph_height">450dp</dimen>
+    <dimen name="graph_title_size">20sp</dimen>
+    
+    <dimen name="login_message">16sp</dimen>
+
+</resources>

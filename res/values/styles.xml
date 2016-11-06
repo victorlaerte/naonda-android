@@ -1,0 +1,26 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:popupMenuStyle">@style/ListPopupWindowLight</item>
+    </style>
+    
+    <style name="ListPopupWindowLight" parent="android:Widget.Holo.Light.ListPopupWindow">
+    	<item name="android:popupBackground">#3374ba</item>
+	</style>
+	
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/TitleBarTextColor</item>
+        <item name="android:background">@color/heavy_blue</item>
+        <item name="android:popupMenuStyle">@style/ListPopupWindowLight</item>
+    </style>
+    
+    <style name="TitleBarTextColor" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    
+</resources>

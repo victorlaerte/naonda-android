@@ -1,0 +1,283 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/forecastRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/addFavLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/breadcrumbLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:text="@string/empty"
+            android:textSize="@dimen/breadcrumb_text_size" />
+
+        <CheckBox
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/addFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:button="@drawable/checkbox" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dip"
+        android:fillViewport="true"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbars="horizontal|vertical"
+        android:layout_below="@+id/addFavLayout" >
+
+        <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+            
+            <HorizontalScrollView
+            android:id="@+id/horizontalView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:scrollbars="horizontal|vertical" >
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="wrap_content"
+                android:background="@color/yellow"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:background="@color/light_blue" android:layout_marginBottom="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="9" >
+
+                    <!-- 00|03|06|09|12|15|18|21h Column -->
+
+<!--                     <TextView -->
+<!--                         android:layout_width="match_parent" -->
+<!--                         android:layout_height="wrap_content" -->
+<!--                         android:layout_weight="1" -->
+<!--                         android:textColor="@color/white" -->
+<!--                         android:text="@string/empty" /> -->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:layout_margin="2dip"
+                        android:text="00:00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:text="03:00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+						android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:text="06:00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:text="09:00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:text="12:00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:text="15:00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:text="18:00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:text="21:00" />
+                </TableRow>
+
+                <!-- waveHeight, waveDirection, windSpeed, windDirection, unrest -->
+
+                <TableRow
+                    android:id="@+id/waveHeightTableRow"
+                    android:layout_width="match_parent"
+                    android:background="@color/light_blue"
+                    android:layout_height="wrap_content"
+                    android:weightSum="9" >
+
+<!--                     <TextView -->
+<!--                         android:layout_width="fill_parent" -->
+<!--                         android:layout_height="wrap_content" -->
+<!--                         android:layout_weight="1" -->
+<!--                         android:text="@string/waveHeight" -->
+<!--                         android:textColor="@color/white" -->
+<!--                         android:layout_gravity="center_vertical" /> -->
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/waveDirectionTableRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_blue"
+                    android:weightSum="9">
+
+<!--                     <TextView -->
+<!--                         android:layout_width="fill_parent" -->
+<!--                         android:layout_height="wrap_content" -->
+<!--                         android:layout_weight="1" -->
+<!--                         android:text="@string/waveDirection" -->
+<!--                         android:textColor="@color/white" -->
+<!--                         android:layout_gravity="center_vertical" /> -->
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/unrestTableRow"
+                    android:layout_width="match_parent"
+                    android:background="@color/light_blue"
+                    android:layout_height="wrap_content"
+                    android:weightSum="9" >
+
+<!--                     <TextView -->
+<!--                         android:layout_width="fill_parent" -->
+<!--                         android:layout_height="wrap_content" -->
+<!--                         android:layout_weight="1" -->
+<!--                         android:text="@string/unrest" -->
+<!--                         android:textColor="@color/white" -->
+<!--                         android:layout_gravity="center_vertical" /> -->
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/windSpeedTableRow"
+                    android:layout_width="match_parent"
+                    android:background="@color/light_blue"
+                    android:layout_height="wrap_content"
+                    android:weightSum="9" >
+
+<!--                     <TextView -->
+<!--                         android:layout_width="fill_parent" -->
+<!--                         android:layout_height="wrap_content" -->
+<!--                         android:layout_weight="1" -->
+<!--                         android:text="@string/windSpeed" -->
+<!--                         android:textColor="@color/white" -->
+<!--                         android:layout_gravity="center_vertical" /> -->
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/windDirectionTableRow"
+                    android:layout_width="match_parent"
+                    android:background="@color/light_blue"
+                    android:layout_height="wrap_content"
+                    android:weightSum="9" >
+
+<!--                     <TextView -->
+<!--                         android:layout_width="fill_parent" -->
+<!--                         android:layout_height="wrap_content" -->
+<!--                         android:layout_weight="1" -->
+<!--                         android:text="@string/windDirection" -->
+<!--                         android:textColor="@color/white" -->
+<!--                         android:layout_gravity="center_vertical" /> -->
+                </TableRow>
+            </TableLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout android:orientation="horizontal" 
+            android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:layout_marginTop="50dp"
+	        android:layout_marginBottom="50dp" >
+            
+            <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left"
+                android:alpha="0.5"
+                 />
+            
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/graphTitle"
+	            android:textColor="@color/white"
+				android:gravity="start"
+				android:textSize="@dimen/graph_title_size" />
+            
+            <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/right"
+                android:alpha="0.5" />
+        </LinearLayout>
+	
+    	<android.support.v4.view.ViewPager
+	        android:id="@+id/viewPager"
+	        android:layout_width="wrap_content"
+	        android:layout_height="@dimen/graph_height"/>
+        </LinearLayout>
+        
+    </ScrollView>
+    
+</RelativeLayout>

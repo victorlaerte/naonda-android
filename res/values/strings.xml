@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">Na Onda</string>
+    <string name="app_name_warn">Na Onda!</string>
+    
+    <string name="forecast">Previsão</string>
+    <string name="action_settings">Settings</string>
+    <string name="unknow">Unknow</string>
+    
+    <string name="loading">Carregando</string>
+    <string name="loaded">Carregado</string>
+    <string name="dologin">Efetue o login e entre</string>
+    <string name="facebook_button">Conecte-se com o Facebook</string>
+    <string name="anonymous_mode">Entrar sem efetuar login</string>
+    <string name="app_id">326747607528453</string>
+    <string name="error">Erro</string>
+    <string name="error_no_internet_avaliable">Você precisa estar conectado à internet</string>
+    <string name="error_unknow_error">Erro desconhecido. Contate o administrador.</string>
+    <string name="error_authentication_error">Não foi possível realizar o login</string>
+    
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    
+    <string name="waves">Ondas</string>
+    <string name="tide">Maré</string>
+    <string name="wind">Vento</string>
+    <string name="weather">Tempo</string>
+    
+    <string name="manha">Manhã</string>
+    <string name="tarde">Tarde</string>
+    <string name="final_tarde">Final de Tarde</string>
+    
+    <string name="agitacao">Agitação: </string>
+    <string name="altura">Altura: </string>
+    <string name="direcao">Direção: </string>
+    <string name="vento">Vento: </string>
+    <string name="direcao_vento">Direção do vento: </string>
+
+    <string name="empty"></string>
+    <string name="menu">Menu</string>
+    <string name="wait">Aguarde</string>
+    
+    <string name="loading_cities">Carregando cidades</string>
+    
+    <string name="no_one">Nenhum</string>
+    <string name="select_state">Selecione um estado:</string>
+    <string name="choose_title">Escolha onde você vai entrar</string>
+    <string name="select_city">Selecione uma cidade:</string>
+    <string name="getting_forecast">Consultando Previsão</string>
+
+    <string name="add_favorites">Adicionar aos Favoritos</string>
+    
+    <string name="error_unknow_contact_admin_with_msg">Erro desconhecido, contate o administrador e informe o seguinte erro: </string>
+    
+    <string name="N">Norte</string>
+    <string name="S">Sul</string>
+    <string name="E">Leste</string>
+    <string name="W">Oeste</string>
+    <string name="NE">Nordeste</string>
+    <string name="SE">Sudeste</string>
+    <string name="NW">Noroeste</string>
+    <string name="SW">Sudoeste</string>
+    <string name="NNE">Norte-Nordeste</string>
+    <string name="ENE">Este-Nordeste</string>
+    <string name="ESE">Este-Sudeste</string>
+    <string name="SSE">Sul-Sudeste</string>
+    <string name="SSW">Sul-Sudoeste</string>
+    <string name="WSW">Oeste-Sudoeste</string>
+    <string name="WNW">Oeste-Noroeste</string>
+    <string name="NNW">Norte-Noroeste</string>
+    
+    <!-- waveHeight, waveDirection, windSpeed, windDirection, unrest -->
+    
+    <string name="waveHeight">Altura</string>
+    <string name="waveDirection">Direção</string>
+    <string name="windSpeed">Velocidade do Vento</string>
+    <string name="windDirection">Direção do Vento</string>
+    <string name="unrest">Agitação</string>
+    
+    <string name="graphTitle">Acompanhe os gráficos</string>
+    <string name="graphErrorMsg">Não foi possível carregar o gráfico</string>
+    
+    <string name="aboutMsg">Na onda foi idealizado para exibir informações sobre a previsão de ondas para os surfistas dispersos nos quatro cantos do Brasil. Todas informações de previsão são fornecidas pelo CPTEC/INPE\nQualquer dúvida ou sugestão pode ser enviada através do email: victorlaertedoliveira@gmail.com</string>
+    <string name="developedBy">Desenvolvido e mantido por:</string>
+    <string name="developerName">Victor Laerte</string>
+    <string name="developerSite">http://www.victorlaerte.com</string>
+    <string name="designedBy">Design por:</string>
+    <string name="designerName">Marcelo Júnior</string>
+    <string name="designerSite">https://www.behance.net/marcelo_jr</string>
+    <string name="aboutTitle">Sobre</string>
+    
+    <string name="noSuchFavorites">Não existe nenhum favorito salvo</string>
+    
+    <string name="likeUsOnFacebook">Curta-nos no Facebook</string>
+    <string name="share">Compartilhar</string>
+    <string name="shareSubjectSelectionFrag">Na Onda App - Previsão de Ondas</string>
+    <string name="shareTextSelectionFrag">Baixe o aplicativo \'Na Onda\' e tenha a previsão das melhores ondas na sua mão\n</string>
+    
+    <string name="banner_ad_unit_id">ca-app-pub-6116766958098245/3319716319</string>
+    
+</resources>

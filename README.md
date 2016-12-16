@@ -3,3 +3,5 @@ Na Onda was designed to display information about the wave forecast for surfers 
 ![na onda](http://www.victorlaerte.com/images/portfolio/modals/naonda.jpg)
 
 [Google Play Download](https://play.google.com/store/apps/details?id=com.victorlaerte.na_onda&hl=pt-br)
+
+[![Facebook](https://github.frapsoft.com/social/facebook.png)](https://www.facebook.com/naondaapp/)

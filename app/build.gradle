@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        applicationId "com.victorlaerte.na_onda"
+        minSdkVersion 14
+        targetSdkVersion 20
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:20.0.0'
+    compile files('libs/bolts-android-1.1.2.jar')
+    compile files('libs/commons-io-2.4-sources.jar')
+    compile files('libs/commons-io-2.4.jar')
+    compile files('libs/commons-lang3-3.3.2.jar')
+    compile files('libs/json-20140107.jar')
+    compile files('libs/universal-image-loader-1.8.4-with-sources.jar')
+    compile 'com.facebook.android:facebook-android-sdk:3.21.1'
+    compile 'com.google.android.gms:play-services:10.0.1'
+}

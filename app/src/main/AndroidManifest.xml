@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.victorlaerte.na_onda"
     android:versionCode="3"
-    android:versionName="1.0.2" >
+    android:versionName="1.0.2">
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="20" />
+        android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,38 +15,40 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
-        <meta-data android:name="com.google.android.gms.version"
-        	android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.victorlaerte.na_onda.view.activities.SplashScreenActivity"
+        <activity
+            android:name="com.victorlaerte.na_onda.view.activities.SplashScreenActivity"
             android:configChanges="orientation"
-    		android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.victorlaerte.na_onda.view.activities.LoginActivity"
+
+        <activity
+            android:name="com.victorlaerte.na_onda.view.activities.LoginActivity"
             android:configChanges="orientation"
-    		android:screenOrientation="portrait" >
-        </activity>
-        
-        <activity android:name="com.victorlaerte.na_onda.view.activities.MainViewActivity"
-           		android:configChanges="keyboardHidden|orientation|screenSize" >
-        </activity>
-        
-        <activity android:name="com.facebook.LoginActivity" >
-        </activity>
-        
-        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="com.victorlaerte.na_onda.view.activities.MainViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
+        <activity android:name="com.facebook.LoginActivity"></activity>
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
-        
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="7668f673d086c7bee7f219e7a5ccb5b7e92a233c" />

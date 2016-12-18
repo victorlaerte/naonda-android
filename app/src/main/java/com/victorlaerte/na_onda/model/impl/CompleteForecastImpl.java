@@ -13,9 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.victorlaerte.na_onda.model.City;
 import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.model.DayForecast;
@@ -23,6 +20,9 @@ import com.victorlaerte.na_onda.util.CharPool;
 import com.victorlaerte.na_onda.util.Constants;
 import com.victorlaerte.na_onda.util.ExtensionUtil;
 import com.victorlaerte.na_onda.util.Validator;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class CompleteForecastImpl implements CompleteForecast {
 
@@ -56,7 +56,7 @@ public class CompleteForecastImpl implements CompleteForecast {
 		Calendar lastDayParsed = null;
 
 		/*
-		 * Dia e hora referente aos dados da previs„o oce‚nica, no formato dd-mm-aaaa 00|03|06|09|12|15|18|21h Z
+		 * Dia e hora referente aos dados da previs√£o oce√¢nica, no formato dd-mm-aaaa 00|03|06|09|12|15|18|21h Z
 		 */
 		DateFormat forecastDf = new SimpleDateFormat("dd-MM-yyyy HH'h' 'Z'");
 

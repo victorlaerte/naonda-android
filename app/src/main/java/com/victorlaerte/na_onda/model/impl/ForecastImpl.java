@@ -5,16 +5,16 @@ import java.util.Calendar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.victorlaerte.na_onda.R;
 import com.victorlaerte.na_onda.model.CardinalPoints;
 import com.victorlaerte.na_onda.model.Forecast;
 import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CharPool;
 import com.victorlaerte.na_onda.util.StringPool;
+
+import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class ForecastImpl implements Forecast {
 
@@ -27,7 +27,7 @@ public class ForecastImpl implements Forecast {
 	private double waveHeight;
 
 	/*
-	 * Sigla do ponto cardeal, colateral ou subcolateral que indica a direção das ondas
+	 * Sigla do ponto cardeal, colateral ou subcolateral que indica a direÃ§Ã£o das ondas
 	 */
 	private CardinalPoints waveDirection;
 
@@ -37,12 +37,12 @@ public class ForecastImpl implements Forecast {
 	private double windSpeed;
 
 	/*
-	 * Sigla do ponto cardeal, colateral ou subcolateral que indica a direção do vento
+	 * Sigla do ponto cardeal, colateral ou subcolateral que indica a direÃ§Ã£o do vento
 	 */
 	private CardinalPoints windDirection;
 
 	/*
-	 * Texto que exibe a agitação do mar no determinado período do dia. Pode ser Fraco, Moderado ou Forte.
+	 * Texto que exibe a agitaÃ§Ã£o do mar no determinado perÃ­odo do dia. Pode ser Fraco, Moderado ou Forte.
 	 */
 	private String unrest;
 

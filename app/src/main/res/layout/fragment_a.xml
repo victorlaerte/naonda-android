@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.junior.naondamaterial2.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
+
+
+        <TableRow
+            android:minHeight="@dimen/table_header"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:elevation="2dp">
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:tint="@color/colorSnow"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_table_access_time"
+                android:id="@+id/imageView0" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:tint="@color/colorSnow"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_table_big_wave"
+                android:id="@+id/imageView1" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:tint="@color/colorSnow"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_table_sea_power"
+                android:id="@+id/imageView2" />
+
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:tint="@color/colorSnow"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_table_wind_lines"
+                android:id="@+id/imageView4" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:tint="@color/colorSnow"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_table_wind_direction"
+                android:id="@+id/imageView3" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:tint="@color/colorSnow"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_table_sea_direction"
+                android:id="@+id/imageView5" />
+
+        </TableRow>
+
+        <ScrollView android:layout_height="match_parent">
+
+            <TableLayout android:id="@+id/score_table"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1">
+
+
+                <TableRow
+                    android:minHeight="@dimen/table_row"
+                    android:gravity="center">
+
+                    <TextView
+                        android:text="09"
+                        android:layout_weight="1"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewClock"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:text="10m"
+                        android:layout_weight="1"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewWave"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:text="Forte"
+                        android:layout_weight="1"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewWindDirection"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:text="200km/h"
+                        android:layout_weight="1"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewWindPower"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:layout_width="0dip"
+                        android:tint="@color/colorPrimaryDark"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_table_arrow"
+                        android:id="@+id/imageViewArrowWind" />
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:layout_width="0dip"
+                        android:tint="@color/colorPrimaryDark"
+                        android:rotation="90"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_table_arrow"
+                        android:id="@+id/imageViewArrowSea" />
+
+                </TableRow>
+
+
+            </TableLayout>
+        </ScrollView>
+
+    </TableLayout>
+
+    <!-- Footer Menu to future features -->
+
+    <!--<TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:background="@color/colorPrimary">
+
+        <TableRow
+            android:minHeight="@dimen/footer_menu_height"
+            android:gravity="center">
+
+            <ImageButton
+                android:background="@null"
+                android:tint="@color/colorSnow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_menu_camera"
+                android:id="@+id/btn_graphic" />
+
+            <ImageButton
+                android:background="@null"
+                android:tint="@color/colorSnow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_menu_slideshow"
+                android:id="@+id/imageButton" />
+
+            <ImageButton
+                android:background="@null"
+                android:tint="@color/colorSnow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_menu_manage"
+                android:id="@+id/imageButton2" />
+
+        </TableRow>
+
+    </TableLayout>-->
+</RelativeLayout>
+

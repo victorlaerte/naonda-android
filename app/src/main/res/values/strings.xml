@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Na Onda</string>
+
+    <string name="navigation_drawer_open">Abrir navigation drawer</string>
+    <string name="navigation_drawer_close">Fechar navigation drawer</string>
+
+    <string name="action_settings">Configurações</string>
+    <string name="action_favorite">Favoritos</string>
+    <string name="action_rating">Avalie-nos</string>
+    <string name="action_about">Sobre nós</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="action_logout">Sair</string>
+
+    <string name="various_search">Buscar</string>
+    <string name="various_letswaves">Imagem de uma prancha de surf com a frase Surf Livre desenhada</string>
+
+    <string name="text_fragment_a">Fragmento A da TAB A</string>
+    <string name="text_fragment_b">Fragmento B da TAB B</string>
+
+    <!-- Tabs -->
+    <string-array name="titles_tab">
+        <item>Seg</item>
+        <item>Ter</item>
+    </string-array>
+
+    <!-- Spinners -->
+    <string-array name="state_names">
+        <item>Selecione o Estado</item>
+        <item>São Paulo</item>
+        <item>Rio de Janeiro</item>
+        <item>Bahia</item>
+        <item>Acre</item>
+    </string-array>
+
+</resources>

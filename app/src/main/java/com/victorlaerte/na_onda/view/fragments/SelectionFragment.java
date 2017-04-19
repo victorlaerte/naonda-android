@@ -18,15 +18,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ShareActionProvider;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.facebook.widget.LikeView;
 import com.victorlaerte.na_onda.R;
-import com.victorlaerte.na_onda.exception.AuthenticationException;
 import com.victorlaerte.na_onda.model.City;
 import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CityUtil;
@@ -111,24 +108,6 @@ public class SelectionFragment extends Fragment {
 
 			}
 		});
-
-		try {
-
-			if (NaOndaUtil.getInstance().getUser().isLoggedIn()) {
-
-				LikeView likeView = (LikeView) view.findViewById(R.id.likeView);
-				likeView.setLikeViewStyle(LikeView.Style.BOX_COUNT);
-				likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
-
-				likeView.setObjectId(Constants.FACEBOOK_NA_ONDA_PAGE_URL);
-
-				LinearLayout likeUsLayout = (LinearLayout) view.findViewById(R.id.likeUsLayout);
-				likeUsLayout.setVisibility(View.VISIBLE);
-			}
-
-		} catch (AuthenticationException e) {
-			Log.e(LOG_TAG, e.getMessage());
-		}
 
 		setHasOptionsMenu(true);
 

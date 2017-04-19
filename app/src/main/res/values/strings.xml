@@ -7,6 +7,10 @@
     
     <string name="forecast">Previsão</string>
     <string name="action_settings">Settings</string>
+    <string name="action_favorite">Favoritos</string>
+    <string name="action_rating">Avalie-nos</string>
+    <string name="action_about">Sobre nós</string>
+
     <string name="unknow">Unknow</string>
     
     <string name="loading">Carregando</string>
@@ -99,5 +103,8 @@
     <string name="shareTextSelectionFrag">Baixe o aplicativo \'Na Onda\' e tenha a previsão das melhores ondas na sua mão\n</string>
     
     <string name="banner_ad_unit_id">ca-app-pub-6116766958098245/3319716319</string>
-    
+
+    <string name="navigation_drawer_open">Abrir navegação</string>
+    <string name="navigation_drawer_close">Fechar navegação</string>
+
 </resources>

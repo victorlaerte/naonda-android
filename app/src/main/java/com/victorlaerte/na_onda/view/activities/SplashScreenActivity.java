@@ -27,8 +27,6 @@ public class SplashScreenActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		setContentView(R.layout.activity_splash_screen);
 
 		loadApplicationComponents(savedInstanceState);

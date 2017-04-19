@@ -34,11 +34,6 @@
         </activity>
 
         <activity
-            android:name="com.victorlaerte.na_onda.view.activities.LoginActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
             android:name="com.victorlaerte.na_onda.view.activities.MainViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 

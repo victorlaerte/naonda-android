@@ -12,7 +12,7 @@ import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.DialogsUtil;
 import com.victorlaerte.na_onda.util.StringPool;
 import com.victorlaerte.na_onda.util.Validator;
-import com.victorlaerte.na_onda.view.activities.LoginActivity;
+import com.victorlaerte.na_onda.view.activities.MainViewActivity;
 import com.victorlaerte.na_onda.view.activities.SplashScreenActivity;
 
 public class LoadAppComponentsTask extends AsyncTask<String, Integer, Boolean> {
@@ -73,7 +73,7 @@ public class LoadAppComponentsTask extends AsyncTask<String, Integer, Boolean> {
 
 			if (result) {
 
-				Intent it = new Intent(strongActivity, LoginActivity.class);
+				Intent it = new Intent(strongActivity, MainViewActivity.class);
 
 				it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

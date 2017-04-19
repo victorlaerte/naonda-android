@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -15,20 +14,18 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -37,29 +34,20 @@ import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.facebook.AppEventsLogger;
-import com.facebook.Session;
-import com.facebook.UiLifecycleHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.victorlaerte.na_onda.R;
-import com.victorlaerte.na_onda.exception.AuthenticationException;
 import com.victorlaerte.na_onda.model.City;
-import com.victorlaerte.na_onda.model.User;
 import com.victorlaerte.na_onda.tasks.ForecastTask;
-import com.victorlaerte.na_onda.tasks.LoadFacebookProfilePhoto;
 import com.victorlaerte.na_onda.util.CharPool;
 import com.victorlaerte.na_onda.util.CityUtil;
 import com.victorlaerte.na_onda.util.Constants;
-import com.victorlaerte.na_onda.util.NaOndaUtil;
 import com.victorlaerte.na_onda.util.Validator;
 import com.victorlaerte.na_onda.view.fragments.SelectionFragment;
 
-public class MainViewActivity extends Activity {
+public class MainViewActivity extends AppCompatActivity {
 
-	private User currentUser;
 	private static final String LOG_TAG = MainViewActivity.class.getName();
-	private UiLifecycleHelper uiHelper;
 
 	private String[] optionsTitles;;
 	private ListView optionsList;
@@ -68,6 +56,7 @@ public class MainViewActivity extends Activity {
 	private City currentSelectedCity;
 	private Menu menu;
 	private ShareActionProvider mShareActionProvider;
+	private Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,24 +67,12 @@ public class MainViewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
 
-		uiHelper = new UiLifecycleHelper(this, null);
-		uiHelper.onCreate(savedInstanceState);
-
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
-
 		setContentView(R.layout.activity_main);
 
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
 		buildDrawerLayout();
-		retriveUser();
-
-		Crashlytics.setUserIdentifier(currentUser.getId());
-		Crashlytics.setUserEmail(currentUser.getUserName());
-		Crashlytics.setUserName(currentUser.getName());
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setTitle(R.string.empty);
-
-		getProfilePicture();
 
 		if (Validator.isNull(currentSelectedCity)) {
 
@@ -143,6 +120,11 @@ public class MainViewActivity extends Activity {
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+		mDrawerToggle = new ActionBarDrawerToggle(
+			this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+		mDrawerLayout.addDrawerListener(mDrawerToggle);
+
 		optionsTitles = getResources().getStringArray(R.array.tab_options);
 
 		optionsList = (ListView) findViewById(R.id.left_drawer);
@@ -179,18 +161,12 @@ public class MainViewActivity extends Activity {
 				 */
 				else if (id == 3) {
 
-					logout();
 				}
 
 				mDrawerLayout.closeDrawers();
 			}
 
 		});
-
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.empty,
-				R.string.empty);
-
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
 	private void favoritesDialog() {
@@ -268,99 +244,6 @@ public class MainViewActivity extends Activity {
 		}
 	}
 
-	private void logout() {
-
-		if (currentUser.isLoggedIn()) {
-
-			Session activeSession = Session.getActiveSession();
-
-			if (Validator.isNull(activeSession)) {
-				activeSession = Session.openActiveSessionFromCache(MainViewActivity.this);
-			}
-
-			if (Validator.isNotNull(activeSession) && activeSession.isOpened()) {
-				activeSession.closeAndClearTokenInformation();
-			}
-
-			Activity activity = MainViewActivity.this;
-			Intent it = new Intent(activity, LoginActivity.class);
-			it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			activity.startActivity(it);
-			activity.overridePendingTransition(R.anim.fadeout, R.anim.fadein);
-			activity.finish();
-
-		} else {
-
-			finish();
-		}
-	}
-
-	private void getProfilePicture() {
-
-		if (currentUser.isLoggedIn()) {
-
-			new LoadFacebookProfilePhoto(this).execute(currentUser.getId());
-		}
-	}
-
-	public void updateProfile(Bitmap bitmap) {
-
-		if (Validator.isNotNull(bitmap)) {
-
-			Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-
-			getActionBar().setIcon(drawable);
-			getActionBar().setTitle(currentUser.getName());
-		} else {
-
-			getActionBar().setIcon(R.drawable.com_facebook_profile_picture_blank_square);
-		}
-	}
-
-	private void retriveUser() {
-
-		try {
-			currentUser = NaOndaUtil.getInstance().getUser();
-			Log.d(LOG_TAG, "Logged with " + currentUser.getName());
-			Log.d(LOG_TAG, "Logged with " + currentUser.getId());
-		} catch (AuthenticationException e) {
-			Log.e(LOG_TAG, e.getMessage());
-		}
-	}
-
-	@Override
-	public void onResume() {
-
-		super.onResume();
-		uiHelper.onResume();
-
-		AppEventsLogger.activateApp(this);
-	}
-
-	@Override
-	public void onPause() {
-
-		super.onPause();
-		uiHelper.onPause();
-
-		AppEventsLogger.deactivateApp(this);
-	}
-
-	@Override
-	public void onDestroy() {
-
-		super.onDestroy();
-		uiHelper.onDestroy();
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		super.onActivityResult(requestCode, resultCode, data);
-		uiHelper.onActivityResult(requestCode, resultCode, data);
-
-	}
-
 	public City getCurrentSelectedCity() {
 
 		return currentSelectedCity;
@@ -380,34 +263,14 @@ public class MainViewActivity extends Activity {
 	public void onSaveInstanceState(Bundle savedState) {
 
 		super.onSaveInstanceState(savedState);
-		uiHelper.onSaveInstanceState(savedState);
 
-		try {
-
-			savedState.putParcelable(Constants.USER_KEY, NaOndaUtil.getInstance().getUser());
-
-			savedState.putParcelable(Constants.CITY_KEY, currentSelectedCity);
-
-		} catch (AuthenticationException e) {
-			Log.d(LOG_TAG, e.getMessage());
-		}
+		savedState.putParcelable(Constants.CITY_KEY, currentSelectedCity);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 
 		super.onRestoreInstanceState(savedInstanceState);
-		uiHelper.onCreate(savedInstanceState);
-
-		User user = savedInstanceState.getParcelable(Constants.USER_KEY);
-		Session session = Session.getActiveSession();
-
-		if (session == null) {
-			session = new Session(MainViewActivity.this);
-			Session.setActiveSession(session);
-		}
-
-		NaOndaUtil.getInstance().setUser(user);
 
 		City lastSelectedCity = savedInstanceState.getParcelable(Constants.CITY_KEY);
 		setCurrentSelectedCity(lastSelectedCity);

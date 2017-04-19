@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.22.1'
     }
 }
 apply plugin: 'com.android.application'
@@ -17,7 +17,7 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "com.victorlaerte.na_onda"
@@ -34,15 +34,12 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:25.1.0'
-    compile files('libs/bolts-android-1.1.2.jar')
+    compile 'com.android.support:support-v4:25.3.1'
     compile files('libs/commons-io-2.4-sources.jar')
     compile files('libs/commons-io-2.4.jar')
     compile files('libs/commons-lang3-3.3.2.jar')
     compile files('libs/json-20140107.jar')
-    compile files('libs/universal-image-loader-1.8.4-with-sources.jar')
-    compile 'com.facebook.android:facebook-android-sdk:3.21.1'
-    compile 'com.google.android.gms:play-services:10.0.1'
+    compile 'com.google.android.gms:play-services:10.2.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }

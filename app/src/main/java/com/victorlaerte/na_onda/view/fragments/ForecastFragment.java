@@ -421,10 +421,10 @@ public class ForecastFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 
-		ActionBar actionBar = getActivity().getActionBar();
-		actionBar.removeAllTabs();
-		actionBar.setStackedBackgroundDrawable(null);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//		ActionBar actionBar = getActivity().getActionBar();
+//		actionBar.removeAllTabs();
+//		actionBar.setStackedBackgroundDrawable(null);
+//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
 		super.onDestroy();
 	}

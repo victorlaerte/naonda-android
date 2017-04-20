@@ -333,23 +333,23 @@ public class ForecastFragment extends Fragment {
 
 	private void addTabsToActionBar() {
 
-		ActionBar actionBar = getActivity().getActionBar();
-
-		actionBar.removeAllTabs();
-
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light_blue)));
-
-		List<Tab> allTabs = getAllTabs(actionBar);
-
-		for (int i = 0; i < allTabs.size(); i++) {
-
-			if (i == 0) {
-				actionBar.addTab(allTabs.get(i), i, true);
-			} else {
-				actionBar.addTab(allTabs.get(i), i);
-			}
-		}
+//		ActionBar actionBar = getActivity().getActionBar();
+//
+//		actionBar.removeAllTabs();
+//
+//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//		actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light_blue)));
+//
+//		List<Tab> allTabs = getAllTabs(actionBar);
+//
+//		for (int i = 0; i < allTabs.size(); i++) {
+//
+//			if (i == 0) {
+//				actionBar.addTab(allTabs.get(i), i, true);
+//			} else {
+//				actionBar.addTab(allTabs.get(i), i);
+//			}
+//		}
 	}
 
 	private List<Tab> getAllTabs(ActionBar actionBar) {

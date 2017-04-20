@@ -21,8 +21,8 @@ android {
 
     defaultConfig {
         applicationId "com.victorlaerte.na_onda"
-        minSdkVersion 14
-        targetSdkVersion 20
+        minSdkVersion 15
+        targetSdkVersion 25
     }
 
     buildTypes {
@@ -34,12 +34,14 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:25.3.1'
-    compile files('libs/commons-io-2.4-sources.jar')
-    compile files('libs/commons-io-2.4.jar')
-    compile files('libs/commons-lang3-3.3.2.jar')
-    compile files('libs/json-20140107.jar')
-    compile 'com.google.android.gms:play-services:10.2.1'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.gms:play-services-ads:10.2.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    testCompile 'junit:junit:4.12'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }

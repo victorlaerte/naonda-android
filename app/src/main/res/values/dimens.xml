@@ -9,6 +9,7 @@
     
     <dimen name="graph_height">450dp</dimen>
     <dimen name="graph_title_size">20sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
     
     <dimen name="login_message">16sp</dimen>
 

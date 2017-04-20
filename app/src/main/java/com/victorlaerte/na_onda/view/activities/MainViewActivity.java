@@ -16,6 +16,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ActionProvider;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -50,7 +52,7 @@ public class MainViewActivity extends AppCompatActivity {
 	private static final String LOG_TAG = MainViewActivity.class.getName();
 
 	private String[] optionsTitles;;
-	private ListView optionsList;
+//	private ListView optionsList;
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private City currentSelectedCity;
@@ -102,9 +104,9 @@ public class MainViewActivity extends AppCompatActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 
-		MenuItem item = menu.findItem(R.id.menu_item_share);
-
-		setmShareActionProvider((ShareActionProvider) item.getActionProvider());
+//		MenuItem item = menu.findItem(R.id.menu_item_share);
+//
+//		setmShareActionProvider((ActionProvider) MenuItemCompat.getActionProvider(item));
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -127,46 +129,46 @@ public class MainViewActivity extends AppCompatActivity {
 
 		optionsTitles = getResources().getStringArray(R.array.tab_options);
 
-		optionsList = (ListView) findViewById(R.id.left_drawer);
-		optionsList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, optionsTitles));
-
-		optionsList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-				/*
-				 * Favorites
-				 */
-				if (id == 0) {
-
-					favoritesDialog();
-				}
-				/*
-				 * Rate us
-				 */
-				else if (id == 1) {
-
-					rateUs();
-				}
-				/*
-				 * About us
-				 */
-				else if (id == 2) {
-
-					aboutDialog();
-				}
-				/*
-				 * Logout
-				 */
-				else if (id == 3) {
-
-				}
-
-				mDrawerLayout.closeDrawers();
-			}
-
-		});
+//		optionsList = (ListView) findViewById(R.id.left_drawer);
+//		optionsList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, optionsTitles));
+//
+//		optionsList.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//				/*
+//				 * Favorites
+//				 */
+//				if (id == 0) {
+//
+//					favoritesDialog();
+//				}
+//				/*
+//				 * Rate us
+//				 */
+//				else if (id == 1) {
+//
+//					rateUs();
+//				}
+//				/*
+//				 * About us
+//				 */
+//				else if (id == 2) {
+//
+//					aboutDialog();
+//				}
+//				/*
+//				 * Logout
+//				 */
+//				else if (id == 3) {
+//
+//				}
+//
+//				mDrawerLayout.closeDrawers();
+//			}
+//
+//		});
 	}
 
 	private void favoritesDialog() {

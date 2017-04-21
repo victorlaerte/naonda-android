@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ShareActionProvider;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.victorlaerte.na_onda.R;
 import com.victorlaerte.na_onda.model.City;
@@ -39,8 +37,6 @@ public class SelectionFragment extends Fragment {
 
 	private Spinner stateSpinner;
 	private Spinner citySpinner;
-	private TextView selectCityLabel;
-	private TextView chooseTitle;
 	private static final String LOG_TAG = SelectionFragment.class.getName();
 
 	@Override
@@ -48,13 +44,9 @@ public class SelectionFragment extends Fragment {
 
 		final View view = inflater.inflate(R.layout.fragment_selection, container, false);
 
-		chooseTitle = (TextView) view.findViewById(R.id.chooseTitle);
-
-		chooseTitle.setText(Html.fromHtml(getTitleText()));
-
-		selectCityLabel = (TextView) view.findViewById(R.id.selectCityLabel);
-
 		stateSpinner = (Spinner) view.findViewById(R.id.stateSpinner);
+		citySpinner = (Spinner) view.findViewById(R.id.citySpinner);
+		setCityAdapter(getDefaultCityAdapterList());
 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.states,
 				R.layout.spinner_item);
@@ -70,7 +62,7 @@ public class SelectionFragment extends Fragment {
 
 				String selectedStateInfo = statesArray[position];
 
-				if (!selectedStateInfo.equals(AndroidUtil.getString(getActivity(), R.string.no_one))) {
+				if (!selectedStateInfo.equals(AndroidUtil.getString(getActivity(), R.string.select_state))) {
 
 					String[] strs = selectedStateInfo.split("-");
 
@@ -80,26 +72,14 @@ public class SelectionFragment extends Fragment {
 
 					Map<String, City> cityList = CityUtil.findByResourceName(getActivity(), resourceCity);
 
-					populateCitySpinner(view, cityList);
-
-					if (Validator.isNull(citySpinner)) {
-
-						citySpinner = (Spinner) view.findViewById(R.id.citySpinner);
-					}
-
-					citySpinner.setVisibility(View.VISIBLE);
-					selectCityLabel.setVisibility(View.VISIBLE);
+					populateCitySpinner(cityList);
 
 				} else {
 
-					if (Validator.isNull(citySpinner)) {
+					if (citySpinner.getAdapter().getCount() > 1) {
 
-						citySpinner = (Spinner) view.findViewById(R.id.citySpinner);
+						setCityAdapter(getDefaultCityAdapterList());
 					}
-
-					citySpinner.setAdapter(null);
-					citySpinner.setVisibility(View.GONE);
-					selectCityLabel.setVisibility(View.GONE);
 				}
 			}
 
@@ -149,14 +129,21 @@ public class SelectionFragment extends Fragment {
 		}
 	}
 
-	public void populateCitySpinner(View view, final Map<String, City> cityList) {
-
-		citySpinner = (Spinner) view.findViewById(R.id.citySpinner);
+	private ArrayList<HashMap<String, String>> getDefaultCityAdapterList() {
 
 		ArrayList<HashMap<String, String>> adapterList = new ArrayList<HashMap<String, String>>();
 
-		adapterList.add(getItem(AndroidUtil.getString(getActivity(), R.string.no_one), StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK));
+		adapterList.add(getItem(AndroidUtil.getString(getActivity(), R.string.select_city), StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK));
+
+		return adapterList;
+	}
+
+	public void populateCitySpinner(final Map<String, City> cityList) {
+
+		citySpinner.setAdapter(null);
+
+		ArrayList<HashMap<String, String>> adapterList = getDefaultCityAdapterList();
 
 		for (Map.Entry<String, City> entry : cityList.entrySet()) {
 
@@ -168,13 +155,7 @@ public class SelectionFragment extends Fragment {
 			adapterList.add(getItem(name, uf, id, key));
 		}
 
-		String[] from = new String[] { CityUtil.NAME_KEY };
-
-		int[] to = new int[] { R.id.text1 };
-
-		int layoutNativo = R.layout.spinner_item;
-
-		citySpinner.setAdapter(new SimpleAdapter(getActivity(), adapterList, layoutNativo, from, to));
+		setCityAdapter(adapterList);
 
 		citySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -188,7 +169,7 @@ public class SelectionFragment extends Fragment {
 
 				String name = item.get(CityUtil.NAME_KEY);
 
-				if (!name.equals(AndroidUtil.getString(getActivity(), R.string.no_one))) {
+				if (!name.equals(AndroidUtil.getString(getActivity(), R.string.select_city))) {
 
 					String key = item.get(CityUtil.HASH_KEY);
 
@@ -213,6 +194,14 @@ public class SelectionFragment extends Fragment {
 		});
 	}
 
+	private void setCityAdapter(ArrayList<HashMap<String, String>> adapterList) {
+		String[] from = new String[] { CityUtil.NAME_KEY };
+		int[] to = new int[] { R.id.text1 };
+		int layoutNativo = R.layout.spinner_item;
+
+		citySpinner.setAdapter(new SimpleAdapter(getActivity(), adapterList, layoutNativo, from, to));
+	}
+
 	private HashMap<String, String> getItem(String name, String uf, String id, String key) {
 
 		HashMap<String, String> item = new HashMap<String, String>();
@@ -224,16 +213,4 @@ public class SelectionFragment extends Fragment {
 		return item;
 	}
 
-	private String getTitleText() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("<font color=#ffffff>");
-		sb.append(AndroidUtil.getString(getActivity(), R.string.choose_title));
-		sb.append("</font>");
-		sb.append(StringPool.SPACE);
-		sb.append("<font color=#fdc010>");
-		sb.append(AndroidUtil.getString(getActivity(), R.string.app_name_warn));
-		sb.append("</font>");
-		return sb.toString();
-	}
 }

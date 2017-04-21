@@ -89,9 +89,9 @@ public class MainViewActivity extends AppCompatActivity {
 			setCurrentSelectedCity(currentSelectedCity);
 		}
 
-		AdView mAdView = (AdView) findViewById(R.id.adView);
-		AdRequest adRequest = new AdRequest.Builder().build();
-		mAdView.loadAd(adRequest);
+//		AdView mAdView = (AdView) findViewById(R.id.adView);
+//		AdRequest adRequest = new AdRequest.Builder().build();
+//		mAdView.loadAd(adRequest);
 	}
 
 	@Override

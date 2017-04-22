@@ -257,8 +257,8 @@ public class MainViewActivity extends AppCompatActivity {
 
 		Log.d(LOG_TAG, "New City Selected: " + this.currentSelectedCity);
 
-		new ForecastTask(this, this.currentSelectedCity).execute(Constants.INPE_SERVICE_BASE_URL,
-				Constants.INPE_SERVICE_FORECAST_6DAYS_8HOURS_BY_DAY_SUFFIX);
+//		new ForecastTask(this, this.currentSelectedCity).execute(Constants.INPE_SERVICE_BASE_URL,
+//				Constants.INPE_SERVICE_FORECAST_6DAYS_8HOURS_BY_DAY_SUFFIX);
 	}
 
 	@Override

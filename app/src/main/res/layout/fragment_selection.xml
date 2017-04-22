@@ -32,7 +32,7 @@
 					android:contentDescription="" />
 
 		        <Spinner
-		            android:id="@+id/stateSpinner"
+		            android:id="@+id/state_spinner"
 		    		android:layout_width="match_parent"
 		   			android:layout_height="50dp"
 		    		android:layout_gravity="center"
@@ -43,7 +43,7 @@
 		    		android:background="@color/white"/>
 		        
 		        <Spinner
-		            android:id="@+id/citySpinner"
+		            android:id="@+id/city_spinner"
 		    		android:layout_width="match_parent"
 		   			android:layout_height="50dp"
 		   			android:layout_gravity="center"

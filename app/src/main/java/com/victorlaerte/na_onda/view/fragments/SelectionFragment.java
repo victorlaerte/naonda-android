@@ -33,7 +33,7 @@ import com.victorlaerte.na_onda.util.StringPool;
 import com.victorlaerte.na_onda.util.Validator;
 import com.victorlaerte.na_onda.view.activities.MainViewActivity;
 
-public class SelectionFragment extends Fragment {
+public class SelectionFragment extends Fragment implements OnItemSelectedListener {
 
 	private Spinner stateSpinner;
 	private Spinner citySpinner;
@@ -44,8 +44,8 @@ public class SelectionFragment extends Fragment {
 
 		final View view = inflater.inflate(R.layout.fragment_selection, container, false);
 
-		stateSpinner = (Spinner) view.findViewById(R.id.stateSpinner);
-		citySpinner = (Spinner) view.findViewById(R.id.citySpinner);
+		stateSpinner = (Spinner) view.findViewById(R.id.state_spinner);
+		citySpinner = (Spinner) view.findViewById(R.id.city_spinner);
 		setCityAdapter(getDefaultCityAdapterList());
 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.states,
@@ -53,41 +53,7 @@ public class SelectionFragment extends Fragment {
 
 		stateSpinner.setAdapter(adapter);
 
-		stateSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
-				String[] statesArray = getResources().getStringArray(R.array.states);
-
-				String selectedStateInfo = statesArray[position];
-
-				if (!selectedStateInfo.equals(AndroidUtil.getString(getActivity(), R.string.select_state))) {
-
-					String[] strs = selectedStateInfo.split("-");
-
-					String nome = strs[1].trim();
-
-					String resourceCity = NaOndaUtil.getInstance().getStateKey(nome) + ExtensionUtil.JS;
-
-					Map<String, City> cityList = CityUtil.findByResourceName(getActivity(), resourceCity);
-
-					populateCitySpinner(cityList);
-
-				} else {
-
-					if (citySpinner.getAdapter().getCount() > 1) {
-
-						setCityAdapter(getDefaultCityAdapterList());
-					}
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parentView) {
-
-			}
-		});
+		stateSpinner.setOnItemSelectedListener(this);
 
 		setHasOptionsMenu(true);
 
@@ -139,13 +105,13 @@ public class SelectionFragment extends Fragment {
 		return adapterList;
 	}
 
-	public void populateCitySpinner(final Map<String, City> cityList) {
+	public void populateCitySpinner() {
 
 		citySpinner.setAdapter(null);
 
 		ArrayList<HashMap<String, String>> adapterList = getDefaultCityAdapterList();
 
-		for (Map.Entry<String, City> entry : cityList.entrySet()) {
+		for (Map.Entry<String, City> entry : cityMap.entrySet()) {
 
 			String name = entry.getValue().getName();
 			String uf = entry.getValue().getUf();
@@ -157,41 +123,7 @@ public class SelectionFragment extends Fragment {
 
 		setCityAdapter(adapterList);
 
-		citySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
-				Object obj = citySpinner.getItemAtPosition(position);
-
-				@SuppressWarnings("unchecked")
-				HashMap<String, String> item = (HashMap<String, String>) obj;
-
-				String name = item.get(CityUtil.NAME_KEY);
-
-				if (!name.equals(AndroidUtil.getString(getActivity(), R.string.select_city))) {
-
-					String key = item.get(CityUtil.HASH_KEY);
-
-					City selectedCity = cityList.get(key);
-
-					Log.d(LOG_TAG, selectedCity.getName());
-
-					Activity activity = getActivity();
-
-					if (activity instanceof MainViewActivity) {
-
-						MainViewActivity mainViewActivity = (MainViewActivity) activity;
-						mainViewActivity.setCurrentSelectedCity(selectedCity);
-					}
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parentView) {
-
-			}
-		});
+		citySpinner.setOnItemSelectedListener(this);
 	}
 
 	private void setCityAdapter(ArrayList<HashMap<String, String>> adapterList) {
@@ -213,4 +145,65 @@ public class SelectionFragment extends Fragment {
 		return item;
 	}
 
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+		if (id == R.id.state_spinner) {
+
+			String[] statesArray = getResources().getStringArray(R.array.states);
+
+			String selectedStateInfo = statesArray[position];
+
+			if (!selectedStateInfo.equals(AndroidUtil.getString(getActivity(), R.string.select_state))) {
+
+				String[] strs = selectedStateInfo.split("-");
+
+				String nome = strs[1].trim();
+
+				String resourceCity = NaOndaUtil.getInstance().getStateKey(nome) + ExtensionUtil.JS;
+
+				cityMap = CityUtil.findByResourceName(getActivity(), resourceCity);
+
+				populateCitySpinner();
+
+			} else {
+
+				if (citySpinner.getAdapter().getCount() > 1) {
+
+					setCityAdapter(getDefaultCityAdapterList());
+				}
+			}
+		} else if (id == R.id.city_spinner) {
+
+			Object obj = citySpinner.getItemAtPosition(position);
+
+			HashMap<String, String> item = (HashMap<String, String>) obj;
+
+			String name = item.get(CityUtil.NAME_KEY);
+
+			if (!name.equals(AndroidUtil.getString(getActivity(), R.string.select_city))) {
+
+				String key = item.get(CityUtil.HASH_KEY);
+
+				City selectedCity = cityMap.get(key);
+
+				Log.d(LOG_TAG, selectedCity.getName());
+
+				Activity activity = getActivity();
+
+				if (activity instanceof MainViewActivity) {
+
+					MainViewActivity mainViewActivity = (MainViewActivity) activity;
+					mainViewActivity.setCurrentSelectedCity(selectedCity);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+
+	}
+
+	private Map<String, City> cityMap;
 }

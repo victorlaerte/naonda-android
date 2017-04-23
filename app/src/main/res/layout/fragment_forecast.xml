@@ -2,13 +2,13 @@
     android:id="@+id/forecastRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_marginTop="?attr/actionBarSize">
 
     <LinearLayout
+        android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/addFavLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -46,7 +46,7 @@
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
 	        android:gravity="center" >
-            
+
             <HorizontalScrollView
             android:id="@+id/horizontalView"
             android:layout_width="wrap_content"
@@ -241,19 +241,19 @@
             </TableLayout>
         </HorizontalScrollView>
 
-        <LinearLayout android:orientation="horizontal" 
+        <LinearLayout android:orientation="horizontal"
             android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center"
 	        android:layout_marginTop="50dp"
 	        android:layout_marginBottom="50dp" >
-            
+
             <ImageView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/left"
                 android:alpha="0.5"
                  />
-            
+
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -261,19 +261,19 @@
 	            android:textColor="@color/white"
 				android:gravity="start"
 				android:textSize="@dimen/graph_title_size" />
-            
+
             <ImageView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/right"
                 android:alpha="0.5" />
         </LinearLayout>
-	
+
     	<android.support.v4.view.ViewPager
 	        android:id="@+id/viewPager"
 	        android:layout_width="wrap_content"
 	        android:layout_height="@dimen/graph_height"/>
         </LinearLayout>
-        
+
     </ScrollView>
-    
+
 </RelativeLayout>

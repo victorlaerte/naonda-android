@@ -17,7 +17,10 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,6 +32,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ShareActionProvider;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -59,6 +63,8 @@ public class ForecastFragment extends Fragment {
 	private CompleteForecast completeForecast;
 	private View view;
 	private ViewPager mViewPager;
+	private Toolbar toolbar;
+	private TabLayout tabLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
@@ -77,6 +83,7 @@ public class ForecastFragment extends Fragment {
 
 		}
 
+		setupLayout();
 //		Bundle bundle = getArguments();
 //
 //		if (Validator.isNotNull(bundle)) {
@@ -91,6 +98,15 @@ public class ForecastFragment extends Fragment {
 //		}
 
 		return view;
+	}
+
+	private void setupLayout() {
+
+		toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+		toolbar.setVisibility(View.VISIBLE);
+
+		tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
+		tabLayout.setVisibility(View.VISIBLE);
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)

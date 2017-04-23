@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,6 +50,8 @@ public class SelectionFragment extends Fragment {
 	private Map<String, City> cityMap;
 	private City selectedCity;
 	private static final String LOG_TAG = SelectionFragment.class.getName();
+	private Toolbar toolbar;
+	private TabLayout tabLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +73,18 @@ public class SelectionFragment extends Fragment {
 
 		addListeners();
 
+		setupLayout();
+
 		return view;
+	}
+
+	private void setupLayout() {
+
+		toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+		toolbar.setVisibility(View.GONE);
+
+		tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
+		tabLayout.setVisibility(View.GONE);
 	}
 
 	private void addListeners() {

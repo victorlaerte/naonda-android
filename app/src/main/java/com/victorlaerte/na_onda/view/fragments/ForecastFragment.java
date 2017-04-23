@@ -18,6 +18,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +34,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.victorlaerte.na_onda.R;
+import com.victorlaerte.na_onda.events.ForecastLoadEvent;
 import com.victorlaerte.na_onda.model.City;
 import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.model.DayForecast;
 import com.victorlaerte.na_onda.model.Forecast;
+import com.victorlaerte.na_onda.model.impl.CityImpl;
 import com.victorlaerte.na_onda.model.impl.CustomPagerAdapter;
 import com.victorlaerte.na_onda.tasks.ForecastTask;
 import com.victorlaerte.na_onda.util.AndroidUtil;
@@ -46,6 +49,10 @@ import com.victorlaerte.na_onda.util.ContentTypeUtil;
 import com.victorlaerte.na_onda.util.Validator;
 import com.victorlaerte.na_onda.view.activities.MainViewActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class ForecastFragment extends Fragment {
 
 	private static final String LOG_TAG = ForecastFragment.class.getName();
@@ -54,13 +61,22 @@ public class ForecastFragment extends Fragment {
 	private ViewPager mViewPager;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
 
 		view = inflater.inflate(R.layout.fragment_forecast, container, false);
 
-//		new ForecastTask(getActivity(), selectedCity).execute(Constants.INPE_SERVICE_BASE_URL,
-//			Constants.INPE_SERVICE_FORECAST_6DAYS_8HOURS_BY_DAY_SUFFIX);
-//
+		if (state == null) {
+
+			Bundle arguments = getArguments();
+			City selectedCity = arguments.getParcelable(City.SELECTED_CITY);
+
+			new ForecastTask(getActivity(), selectedCity).execute(Constants.INPE_SERVICE_BASE_URL,
+				Constants.INPE_SERVICE_FORECAST_6DAYS_8HOURS_BY_DAY_SUFFIX);
+
+		} else {
+
+		}
+
 //		Bundle bundle = getArguments();
 //
 //		if (Validator.isNotNull(bundle)) {
@@ -75,6 +91,28 @@ public class ForecastFragment extends Fragment {
 //		}
 
 		return view;
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onForecastLoadEvent(ForecastLoadEvent event) {
+
+		Log.d(LOG_TAG, "FORECAST LOADED");
+
+		Log.d(LOG_TAG, event.getCompleteForecast().toString());
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		EventBus.getDefault().register(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+
+		EventBus.getDefault().unregister(this);
 	}
 
 	private void setShareOptions(int dayIndex) {
@@ -96,7 +134,7 @@ public class ForecastFragment extends Fragment {
 				Intent shareIntent = new Intent();
 				shareIntent.setAction(Intent.ACTION_SEND);
 				shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-						AndroidUtil.getString(getActivity(), R.string.shareSubjectSelectionFrag));
+					AndroidUtil.getString(getActivity(), R.string.shareSubjectSelectionFrag));
 				shareIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
 				shareIntent.setType(ContentTypeUtil.TEXT_PLAIN);
 
@@ -120,15 +158,15 @@ public class ForecastFragment extends Fragment {
 		sb.append(CharPool.NEW_LINE);
 		sb.append(CharPool.NEW_LINE);
 		sb.append(dayForecast.getForecast().get(2)
-				.getSharebleForecast(getActivity(), AndroidUtil.getString(getActivity(), R.string.manha)));
+			.getSharebleForecast(getActivity(), AndroidUtil.getString(getActivity(), R.string.manha)));
 		sb.append(CharPool.NEW_LINE);
 		sb.append(CharPool.NEW_LINE);
 		sb.append(dayForecast.getForecast().get(4)
-				.getSharebleForecast(getActivity(), AndroidUtil.getString(getActivity(), R.string.tarde)));
+			.getSharebleForecast(getActivity(), AndroidUtil.getString(getActivity(), R.string.tarde)));
 		sb.append(CharPool.NEW_LINE);
 		sb.append(CharPool.NEW_LINE);
 		sb.append(dayForecast.getForecast().get(6)
-				.getSharebleForecast(getActivity(), AndroidUtil.getString(getActivity(), R.string.final_tarde)));
+			.getSharebleForecast(getActivity(), AndroidUtil.getString(getActivity(), R.string.final_tarde)));
 		sb.append(CharPool.NEW_LINE);
 		sb.append(CharPool.NEW_LINE);
 		sb.append(AndroidUtil.getString(getActivity(), R.string.shareTextSelectionFrag));
@@ -154,7 +192,7 @@ public class ForecastFragment extends Fragment {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
 				SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.PREFS_FILE,
-						getActivity().MODE_PRIVATE).edit();
+					getActivity().MODE_PRIVATE).edit();
 
 				String sharedPreferencesId = completeForecast.getCity().getSharedPreferencesId();
 
@@ -259,7 +297,7 @@ public class ForecastFragment extends Fragment {
 
 		LinearLayout linearLayout = new LinearLayout(getActivity());
 		linearLayout
-				.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1f));
+			.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1f));
 		linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -275,9 +313,9 @@ public class ForecastFragment extends Fragment {
 		TextView textView = new TextView(getActivity());
 		textView.setText(text);
 		android.widget.TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT, 1f);
+			LayoutParams.WRAP_CONTENT, 1f);
 		layoutParams.setMargins(AndroidUtil.convertDpToPixel(15, getActivity()), 0,
-				AndroidUtil.convertDpToPixel(15, getActivity()), AndroidUtil.convertDpToPixel(15, getActivity()));
+			AndroidUtil.convertDpToPixel(15, getActivity()), AndroidUtil.convertDpToPixel(15, getActivity()));
 		textView.setLayoutParams(layoutParams);
 		textView.setGravity(Gravity.CENTER_HORIZONTAL);
 		textView.setTextColor(getResources().getColor(R.color.white));

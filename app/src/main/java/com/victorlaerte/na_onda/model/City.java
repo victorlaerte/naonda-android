@@ -6,6 +6,8 @@ public interface City extends Parcelable {
 
 	String SHARED_PREFS_FAV_CITIES = "fav_cities";
 
+	String SELECTED_CITY = "selectedCity";
+
 	public String getName();
 
 	public void setName(String name);

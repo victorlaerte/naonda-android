@@ -2,7 +2,6 @@
 <resources>
     <color name="heavy_blue">#3374ba</color>
     <color name="light_blue">#478fcc</color>
-    <color name="yellow">#fdc010</color>
     <color name="white">#ffffff</color>
     <color name="colorPrimary">#7eb9c6</color>
     <color name="colorPrimaryDark">#6c9ea9</color>

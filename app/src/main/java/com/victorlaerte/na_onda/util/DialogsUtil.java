@@ -1,11 +1,9 @@
 package com.victorlaerte.na_onda.util;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.widget.Toast;
 
 import com.victorlaerte.na_onda.R;
 
@@ -18,26 +16,6 @@ public class DialogsUtil {
 
 		}
 	};
-
-	public static void showToastDialog(final Activity activity, int messageId) {
-
-		showToastDialog(activity, AndroidUtil.getString(activity, messageId));
-	}
-
-	public static void showToastDialog(final Activity activity, final String message) {
-
-		if (activity != null) {
-
-			activity.runOnUiThread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
-				}
-			});
-		}
-	}
 
 	public static void showDialog(Context context, int titleId, String message, DialogInterface.OnClickListener event) {
 
@@ -55,58 +33,52 @@ public class DialogsUtil {
 		showDialog(context, title, AndroidUtil.getString(context, messageId), event);
 	}
 
-	public static void showDialog(final Context activity, final String title, final String message,
+	public static void showDialog(final Context context, final String title, final String message,
 	                              final DialogInterface.OnClickListener okEvent) {
 
-		if (Validator.isNotNull(activity)) {
+		if (Validator.isNotNull(context)) {
 
 			final DialogInterface.OnClickListener finalEvent = okEvent == null ? NULL_ON_CLICK_LISTENER : okEvent;
 
-			new AlertDialog.Builder(activity, AlertDialog.BUTTON_NEUTRAL).setTitle(title)
-				.setMessage(message).setNeutralButton("OK", finalEvent).show();
+			new AlertDialog.Builder(context)
+				.setTitle(title)
+				.setMessage(message)
+				.setNeutralButton("OK", finalEvent)
+				.show();
 		}
 	}
 
-	public static void dialogQuestion(final Activity activity, final int titleId, final String message,
+	public static void dialogQuestion(final Context context, final int titleId, final String message,
 	                                  final android.content.DialogInterface.OnClickListener positiveEvent,
 	                                  final android.content.DialogInterface.OnClickListener negativeEvent) {
 
-		dialogQuestion(activity, AndroidUtil.getString(activity, titleId), message, positiveEvent, negativeEvent);
+		dialogQuestion(context, AndroidUtil.getString(context, titleId), message, positiveEvent, negativeEvent);
 	}
 
-	public static void dialogQuestion(final Activity activity, final int titleId, final int messageId,
+	public static void dialogQuestion(final Context context, final int titleId, final int messageId,
 	                                  final android.content.DialogInterface.OnClickListener positiveEvent,
 	                                  final android.content.DialogInterface.OnClickListener negativeEvent) {
 
-		dialogQuestion(activity, AndroidUtil.getString(activity, titleId), AndroidUtil.getString(activity, messageId),
+		dialogQuestion(context, AndroidUtil.getString(context, titleId), AndroidUtil.getString(context, messageId),
 			positiveEvent, negativeEvent);
 	}
 
-	public static void dialogQuestion(final Activity activity, final String title, final int messageId,
+	public static void dialogQuestion(final Context context, final String title, final int messageId,
 	                                  final android.content.DialogInterface.OnClickListener positiveEvent,
 	                                  final android.content.DialogInterface.OnClickListener negativeEvent) {
 
-		dialogQuestion(activity, title, AndroidUtil.getString(activity, messageId), positiveEvent, negativeEvent);
+		dialogQuestion(context, title, AndroidUtil.getString(context, messageId), positiveEvent, negativeEvent);
 	}
 
-	public static void dialogQuestion(final Activity activity, final String title, final String message,
+	public static void dialogQuestion(final Context context, final String title, final String message,
 	                                  final DialogInterface.OnClickListener positiveEvent, final DialogInterface.OnClickListener negativeEvent) {
 
-		if (activity != null) {
+		final DialogInterface.OnClickListener finalNegativeEvent = negativeEvent == null ? NULL_ON_CLICK_LISTENER : negativeEvent;
+		final DialogInterface.OnClickListener finalPositiveEvent = positiveEvent == null ? NULL_ON_CLICK_LISTENER : positiveEvent;
 
-			final DialogInterface.OnClickListener finalNegativeEvent = negativeEvent == null ? NULL_ON_CLICK_LISTENER : negativeEvent;
-			final DialogInterface.OnClickListener finalPositiveEvent = positiveEvent == null ? NULL_ON_CLICK_LISTENER : positiveEvent;
-
-			activity.runOnUiThread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					new AlertDialog.Builder(activity, AlertDialog.THEME_DEVICE_DEFAULT_DARK).setTitle(title)
-						.setMessage(message).setNegativeButton(R.string.no, finalNegativeEvent)
-						.setPositiveButton(R.string.yes, finalPositiveEvent).show();
-				}
-			});
-		}
+		new AlertDialog.Builder(context)
+			.setTitle(title)
+			.setMessage(message).setNegativeButton(R.string.no, finalNegativeEvent)
+			.setPositiveButton(R.string.yes, finalPositiveEvent).show();
 	}
 }

@@ -57,7 +57,6 @@
             <TableLayout
                 android:id="@+id/tableLayout"
                 android:layout_width="wrap_content"
-                android:background="@color/yellow"
                 android:layout_height="wrap_content">
 
                 <TableRow

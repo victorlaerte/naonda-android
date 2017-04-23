@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.victorlaerte.na_onda.R;
 import com.victorlaerte.na_onda.model.City;
+import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.tasks.ForecastTask;
 import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CityUtil;
@@ -126,16 +127,24 @@ public class SelectionFragment extends Fragment {
 
 				} else {
 
-					ForecastFragment forecastFragment = new ForecastFragment();
-
-					FragmentTransaction transaction = getActivity().getFragmentManager().beginTransaction();
-
-					transaction.replace(R.id.content_frame, forecastFragment, forecastFragment.getClass().getName());
-					transaction.addToBackStack(SelectionFragment.class.getName());
-					transaction.commitAllowingStateLoss();
+					openForecastFragment();
 				}
 			}
 		});
+	}
+
+	private void openForecastFragment() {
+		ForecastFragment forecastFragment = new ForecastFragment();
+
+		Bundle args = new Bundle();
+		args.putParcelable(City.SELECTED_CITY, selectedCity);
+		forecastFragment.setArguments(args);
+
+		FragmentTransaction transaction = getActivity().getFragmentManager().beginTransaction();
+
+		transaction.replace(R.id.content_frame, forecastFragment, forecastFragment.getClass().getName());
+		transaction.addToBackStack(SelectionFragment.class.getName());
+		transaction.commitAllowingStateLoss();
 	}
 
 	@Override

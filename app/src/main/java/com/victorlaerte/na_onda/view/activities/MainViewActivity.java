@@ -55,7 +55,6 @@ public class MainViewActivity extends AppCompatActivity {
 //	private ListView optionsList;
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private City currentSelectedCity;
 	private Menu menu;
 	private ShareActionProvider mShareActionProvider;
 	private Toolbar toolbar;
@@ -76,18 +75,11 @@ public class MainViewActivity extends AppCompatActivity {
 
 		buildDrawerLayout();
 
-		if (Validator.isNull(currentSelectedCity)) {
+		SelectionFragment selectionFragment = new SelectionFragment();
 
-			SelectionFragment selectionFragment = new SelectionFragment();
-
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			transaction.add(R.id.content_frame, selectionFragment, selectionFragment.getClass().getName());
-			transaction.commit();
-
-		} else {
-
-			setCurrentSelectedCity(currentSelectedCity);
-		}
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		transaction.add(R.id.content_frame, selectionFragment, selectionFragment.getClass().getName());
+		transaction.commit();
 
 //		AdView mAdView = (AdView) findViewById(R.id.adView);
 //		AdRequest adRequest = new AdRequest.Builder().build();
@@ -212,7 +204,8 @@ public class MainViewActivity extends AppCompatActivity {
 					City city = favoriteCities.get(position);
 
 					dialog.dismiss();
-					setCurrentSelectedCity(city);
+
+					//TODO: OPEN FORECAST FRAGMENT
 				}
 			});
 
@@ -244,38 +237,6 @@ public class MainViewActivity extends AppCompatActivity {
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.GOOGLE_PLAY_URL + MainViewActivity.this
 					.getPackageName())));
 		}
-	}
-
-	public City getCurrentSelectedCity() {
-
-		return currentSelectedCity;
-	}
-
-	public void setCurrentSelectedCity(City currentSelectedCity) {
-
-		this.currentSelectedCity = currentSelectedCity;
-
-		Log.d(LOG_TAG, "New City Selected: " + this.currentSelectedCity);
-
-//		new ForecastTask(this, this.currentSelectedCity).execute(Constants.INPE_SERVICE_BASE_URL,
-//				Constants.INPE_SERVICE_FORECAST_6DAYS_8HOURS_BY_DAY_SUFFIX);
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle savedState) {
-
-		super.onSaveInstanceState(savedState);
-
-		savedState.putParcelable(Constants.CITY_KEY, currentSelectedCity);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-		super.onRestoreInstanceState(savedInstanceState);
-
-		City lastSelectedCity = savedInstanceState.getParcelable(Constants.CITY_KEY);
-		setCurrentSelectedCity(lastSelectedCity);
 	}
 
 	@Override

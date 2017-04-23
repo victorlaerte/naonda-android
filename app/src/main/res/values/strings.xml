@@ -51,6 +51,7 @@
     <string name="select_state">Selecione um estado</string>
     <string name="choose_title">Escolha onde você vai entrar</string>
     <string name="select_city">Selecione uma cidade</string>
+    <string name="error_select_city">Erro! Vocë deve selecionar uma cidade</string>
     <string name="getting_forecast">Consultando Previsão</string>
 
     <string name="add_favorites">Adicionar aos Favoritos</string>
@@ -107,4 +108,5 @@
     <string name="navigation_drawer_close">Fechar navegação</string>
 
     <string name="various_letswaves">Imagem de uma prancha de surf com a frase Surf Livre desenhada</string>
+    <string name="search">Buscar</string>
 </resources>

@@ -38,6 +38,7 @@ import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.model.DayForecast;
 import com.victorlaerte.na_onda.model.Forecast;
 import com.victorlaerte.na_onda.model.impl.CustomPagerAdapter;
+import com.victorlaerte.na_onda.tasks.ForecastTask;
 import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CharPool;
 import com.victorlaerte.na_onda.util.Constants;
@@ -57,18 +58,21 @@ public class ForecastFragment extends Fragment {
 
 		view = inflater.inflate(R.layout.fragment_forecast, container, false);
 
-		Bundle bundle = getArguments();
-
-		if (Validator.isNotNull(bundle)) {
-
-			completeForecast = bundle.getParcelable(CompleteForecast.ID);
-
-			fillCityInfo();
-
-			addTabsToActionBar();
-
-			addListners();
-		}
+//		new ForecastTask(getActivity(), selectedCity).execute(Constants.INPE_SERVICE_BASE_URL,
+//			Constants.INPE_SERVICE_FORECAST_6DAYS_8HOURS_BY_DAY_SUFFIX);
+//
+//		Bundle bundle = getArguments();
+//
+//		if (Validator.isNotNull(bundle)) {
+//
+//			completeForecast = bundle.getParcelable(CompleteForecast.ID);
+//
+//			fillCityInfo();
+//
+//			addTabsToActionBar();
+//
+//			addListners();
+//		}
 
 		return view;
 	}

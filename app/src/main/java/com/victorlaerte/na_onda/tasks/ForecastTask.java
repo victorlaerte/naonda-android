@@ -6,6 +6,7 @@ import java.text.ParseException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -13,11 +14,13 @@ import org.xml.sax.SAXException;
 
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.victorlaerte.na_onda.R;
+import com.victorlaerte.na_onda.events.ForecastLoadEvent;
 import com.victorlaerte.na_onda.model.City;
 import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.model.impl.CompleteForecastImpl;
@@ -32,16 +35,16 @@ import com.victorlaerte.na_onda.view.fragments.SelectionFragment;
 
 public class ForecastTask extends AsyncTask<String, Integer, Boolean> {
 
-	WeakReference<MainViewActivity> wActivity;
+	WeakReference<Context> wContext;
 	ProgressDialog dialog;
 	City city;
 	String msgError = StringPool.BLANK;
 	CompleteForecast completeForecast;
 	private static final String LOG_TAG = ForecastTask.class.getName();
 
-	public ForecastTask(MainViewActivity activity, City city) {
+	public ForecastTask(Context context, City city) {
 
-		wActivity = new WeakReference<MainViewActivity>(activity);
+		wContext = new WeakReference<Context>(context);
 		this.city = city;
 	}
 
@@ -50,13 +53,13 @@ public class ForecastTask extends AsyncTask<String, Integer, Boolean> {
 
 		super.onPreExecute();
 
-		MainViewActivity activity = wActivity.get();
+		Context context = wContext.get();
 
-		if (Validator.isNotNull(activity)) {
+		if (Validator.isNotNull(context)) {
 
-			dialog = new ProgressDialog(activity);
+			dialog = new ProgressDialog(context);
 			dialog.setTitle(R.string.wait);
-			dialog.setMessage(AndroidUtil.getString(activity, R.string.getting_forecast));
+			dialog.setMessage(AndroidUtil.getString(context, R.string.getting_forecast));
 			dialog.setCancelable(false);
 			dialog.show();
 		}
@@ -68,11 +71,11 @@ public class ForecastTask extends AsyncTask<String, Integer, Boolean> {
 		String baseUrl = params[0];
 		String suffixUrl = params[1];
 
-		MainViewActivity activity = wActivity.get();
+		Context context = wContext.get();
 
-		if (Validator.isNotNull(activity)) {
+		if (Validator.isNotNull(context)) {
 
-			if (AndroidUtil.isNetworkAvaliable(activity)) {
+			if (AndroidUtil.isNetworkAvaliable(context)) {
 
 				try {
 
@@ -92,12 +95,12 @@ public class ForecastTask extends AsyncTask<String, Integer, Boolean> {
 
 					msgError = e.getMessage();
 					Log.e(LOG_TAG, msgError);
-					msgError = AndroidUtil.getString(activity, R.string.error_unknow_contact_admin_with_msg) + msgError;
+					msgError = AndroidUtil.getString(context, R.string.error_unknow_contact_admin_with_msg) + msgError;
 				}
 
 			} else {
 
-				msgError = AndroidUtil.getString(activity, R.string.error_no_internet_avaliable);
+				msgError = AndroidUtil.getString(context, R.string.error_no_internet_avaliable);
 			}
 		}
 
@@ -113,36 +116,17 @@ public class ForecastTask extends AsyncTask<String, Integer, Boolean> {
 			dialog.dismiss();
 		}
 
-		MainViewActivity activity = wActivity.get();
+		Context context = wContext.get();
 
-		if (Validator.isNotNull(activity)) {
+		if (Validator.isNotNull(context)) {
 
 			if (result) {
 
-				/*
-				 * XXX
-				 * Bad Pratice, avoid performing transactions inside asynchronous callback methods
-				 */
-				ForecastFragment forecastFragment = new ForecastFragment();
-
-				Bundle args = new Bundle();
-
-				args.putParcelable(CompleteForecast.ID, completeForecast);
-
-				forecastFragment.setArguments(args);
-
-				if (!activity.isFinishing()) {
-
-					FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
-
-					transaction.replace(R.id.content_frame, forecastFragment, forecastFragment.getClass().getName());
-					transaction.addToBackStack(SelectionFragment.class.getName());
-					transaction.commitAllowingStateLoss();
-				}
+				EventBus.getDefault().post(new ForecastLoadEvent(completeForecast));
 
 			} else {
 
-				DialogsUtil.showDialog(activity, R.string.error, msgError, null);
+				DialogsUtil.showDialog(context, R.string.error, msgError, null);
 			}
 		}
 	}

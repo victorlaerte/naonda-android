@@ -105,4 +105,20 @@
 
     <string name="various_letswaves">Imagem de uma prancha de surf com a frase Surf Livre desenhada</string>
     <string name="search">Buscar</string>
+
+    <string name="sunday">Domingo</string>
+    <string name="monday">Segunda</string>
+    <string name="tuesday">Terça</string>
+    <string name="wednesday">Quarta</string>
+    <string name="thursday">Quinta</string>
+    <string name="friday">Sexta</string>
+    <string name="saturday">Sábado</string>
+
+    <string name="sunday_acronym">DOM</string>
+    <string name="monday_acronym">SEG</string>
+    <string name="tuesday_acronym">TER</string>
+    <string name="wednesday_acronym">QUA</string>
+    <string name="thursday_acronym">QUI</string>
+    <string name="friday_acronym">SEX</string>
+    <string name="saturday_acronym">SAB</string>
 </resources>

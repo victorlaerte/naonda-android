@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,7 @@ import com.victorlaerte.na_onda.events.ForecastLoadEvent;
 import com.victorlaerte.na_onda.model.City;
 import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.model.DayForecast;
+import com.victorlaerte.na_onda.model.DayOfWeek;
 import com.victorlaerte.na_onda.model.Forecast;
 import com.victorlaerte.na_onda.model.impl.CityImpl;
 import com.victorlaerte.na_onda.model.impl.CustomPagerAdapter;
@@ -107,6 +109,43 @@ public class ForecastFragment extends Fragment {
 
 		tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
 		tabLayout.setVisibility(View.VISIBLE);
+
+		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+
+				//TODO: clear and reload content
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+
+			}
+		});
+	}
+
+	private void setupTabLayout() {
+
+		tabLayout.clearOnTabSelectedListeners();
+		tabLayout.removeAllTabs();
+		
+		List<DayForecast> forecastByDay = completeForecast.getForecastByDay();
+
+		for (DayForecast dayForecast : forecastByDay) {
+
+			TabLayout.Tab tab = tabLayout.newTab();
+
+			tab.setText(getDayOfWeek(dayForecast.getDay()).getDayAcronym());
+			tab.setTag(dayForecast);
+
+			tabLayout.addTab(tab);
+		}
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -114,7 +153,10 @@ public class ForecastFragment extends Fragment {
 
 		Log.d(LOG_TAG, "FORECAST LOADED");
 
+		this.completeForecast = event.getCompleteForecast();
 		Log.d(LOG_TAG, event.getCompleteForecast().toString());
+
+		setupTabLayout();
 	}
 
 	@Override
@@ -294,7 +336,7 @@ public class ForecastFragment extends Fragment {
 
 		if (Validator.isNull(mViewPager)) {
 
-			mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+//			mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		}
 
 		mViewPager.setAdapter(mCustomPagerAdapter);
@@ -410,46 +452,53 @@ public class ForecastFragment extends Fragment {
 //		}
 	}
 
-	private List<Tab> getAllTabs(ActionBar actionBar) {
+//	private List<Tab> getAllTabs(ActionBar actionBar) {
+//
+//		List<Tab> tabs = new ArrayList<ActionBar.Tab>();
+//
+//		List<DayForecast> forecastByDay = completeForecast.getForecastByDay();
+//
+//		for (DayForecast dayForecast : forecastByDay) {
+//
+//			tabs.add(getTab(actionBar, dayForecast));
+//		}
+//
+//		return tabs;
+//	}
 
-		List<Tab> tabs = new ArrayList<ActionBar.Tab>();
+//	private Tab getTab(ActionBar actionBar, final DayForecast dayForecast) {
+//
+//		final Tab tab = actionBar.newTab();
+//
+//		tab.setText(getDayWithMonth(dayForecast.getDay()));
+//		tab.setTabListener(new TabListener() {
+//
+//			@Override
+//			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+//
+//			}
+//
+//			@Override
+//			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+//
+//				setShareOptions(tab.getPosition());
+//				loadView(tab.getPosition());
+//			}
+//
+//			@Override
+//			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+//
+//			}
+//		});
+//
+//		return tab;
+//	}
 
-		List<DayForecast> forecastByDay = completeForecast.getForecastByDay();
+	private DayOfWeek getDayOfWeek(Calendar calendar) {
 
-		for (DayForecast dayForecast : forecastByDay) {
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
 
-			tabs.add(getTab(actionBar, dayForecast));
-		}
-
-		return tabs;
-	}
-
-	private Tab getTab(ActionBar actionBar, final DayForecast dayForecast) {
-
-		final Tab tab = actionBar.newTab();
-
-		tab.setText(getDayWithMonth(dayForecast.getDay()));
-		tab.setTabListener(new TabListener() {
-
-			@Override
-			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-
-			}
-
-			@Override
-			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-
-				setShareOptions(tab.getPosition());
-				loadView(tab.getPosition());
-			}
-
-			@Override
-			public void onTabReselected(Tab tab, FragmentTransaction ft) {
-
-			}
-		});
-
-		return tab;
+		return DayOfWeek.fromInt(day);
 	}
 
 	private String getDayWithMonth(Calendar calendar) {

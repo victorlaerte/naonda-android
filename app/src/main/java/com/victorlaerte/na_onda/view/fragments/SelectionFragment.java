@@ -106,7 +106,7 @@ public class SelectionFragment extends Fragment {
 
 					String nome = strs[1].trim();
 
-					String resourceCity = NaOndaUtil.getInstance().getStateKey(nome) + ExtensionUtil.JS;
+					String resourceCity = NaOndaUtil.getStateKey(nome) + ExtensionUtil.JS;
 
 					cityMap = CityUtil.findByResourceName(getActivity(), resourceCity);
 

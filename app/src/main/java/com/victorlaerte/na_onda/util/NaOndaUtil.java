@@ -4,14 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class NaOndaUtil {
 
-	private static NaOndaUtil instance = new NaOndaUtil();
-
-	public static NaOndaUtil getInstance() {
-
-		return instance;
-	}
-
-	public String getStateKey(String stateName) {
+	public static String getStateKey(String stateName) {
 
 		String key = StringPool.BLANK;
 

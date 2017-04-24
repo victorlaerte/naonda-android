@@ -155,6 +155,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:background="@color/white"
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -170,44 +171,6 @@
 	        android:orientation="vertical"
 	        android:gravity="center" >
 
-            <TableLayout
-                android:id="@+id/tableLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TableLayout>
-
-        <LinearLayout android:orientation="horizontal"
-            android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="center"
-	        android:layout_marginTop="50dp"
-	        android:layout_marginBottom="50dp" >
-
-            <ImageView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/left"
-                android:alpha="0.5"
-                 />
-
-	        <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/graphTitle"
-	            android:textColor="@color/white"
-				android:gravity="start"
-				android:textSize="@dimen/graph_title_size" />
-
-            <ImageView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/right"
-                android:alpha="0.5" />
-        </LinearLayout>
-
-    	<android.support.v4.view.ViewPager
-	        android:id="@+id/viewPager"
-	        android:layout_width="wrap_content"
-	        android:layout_height="@dimen/graph_height"/>
         </LinearLayout>
 
     </ScrollView>

@@ -23,6 +23,7 @@ android {
         applicationId "com.victorlaerte.na_onda"
         minSdkVersion 15
         targetSdkVersion 25
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {

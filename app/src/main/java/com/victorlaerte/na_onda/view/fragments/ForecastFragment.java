@@ -196,83 +196,83 @@ public class ForecastFragment extends Fragment {
 		SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_FILE, getActivity().MODE_PRIVATE);
 		final Set<String> stringSet = prefs.getStringSet(City.SHARED_PREFS_FAV_CITIES, new HashSet<String>());
 
-		CheckBox checkBoxFav = (CheckBox) view.findViewById(R.id.addFav);
+//		CheckBox checkBoxFav = (CheckBox) view.findViewById(R.id.addFav);
+//
+//		if (stringSet.contains(completeForecast.getCity().getSharedPreferencesId())) {
+//			checkBoxFav.setChecked(true);
+//		}
 
-		if (stringSet.contains(completeForecast.getCity().getSharedPreferencesId())) {
-			checkBoxFav.setChecked(true);
-		}
-
-		checkBoxFav.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-				SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.PREFS_FILE,
-					getActivity().MODE_PRIVATE).edit();
-
-				String sharedPreferencesId = completeForecast.getCity().getSharedPreferencesId();
-
-				Set<String> newStringSet = new HashSet<String>();
-
-				newStringSet.addAll(stringSet);
-
-				if (isChecked) {
-
-					newStringSet.add(sharedPreferencesId);
-					editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
-
-				} else {
-
-					if (newStringSet.contains(sharedPreferencesId)) {
-						newStringSet.remove(sharedPreferencesId);
-						editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
-					}
-				}
-
-				editor.commit();
-			}
-		});
+//		checkBoxFav.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+//
+//			@Override
+//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//				SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.PREFS_FILE,
+//					getActivity().MODE_PRIVATE).edit();
+//
+//				String sharedPreferencesId = completeForecast.getCity().getSharedPreferencesId();
+//
+//				Set<String> newStringSet = new HashSet<String>();
+//
+//				newStringSet.addAll(stringSet);
+//
+//				if (isChecked) {
+//
+//					newStringSet.add(sharedPreferencesId);
+//					editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
+//
+//				} else {
+//
+//					if (newStringSet.contains(sharedPreferencesId)) {
+//						newStringSet.remove(sharedPreferencesId);
+//						editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
+//					}
+//				}
+//
+//				editor.commit();
+//			}
+//		});
 	}
 
 	private void fillTable(int dayIndex) {
 
-		clearTable();
-
-		DayForecast dayForecast = completeForecast.getForecastByDay().get(dayIndex);
-		List<Forecast> forecastList = dayForecast.getForecast();
-
-		TableRow waveHeightTableRow = (TableRow) view.findViewById(R.id.waveHeightTableRow);
-		TableRow waveDirectionTableRow = (TableRow) view.findViewById(R.id.waveDirectionTableRow);
-		TableRow unrestTableRow = (TableRow) view.findViewById(R.id.unrestTableRow);
-		TableRow windSpeedTableRow = (TableRow) view.findViewById(R.id.windSpeedTableRow);
-		TableRow windDirectionTableRow = (TableRow) view.findViewById(R.id.windDirectionTableRow);
-
-		for (Forecast forecast : forecastList) {
-
-			ImageView heightImage = imageViewFactory(getResources().getDrawable(R.drawable.wave_height));
-			TextView heightTxtView = textViewFactory(String.valueOf(forecast.getWaveHeight()) + CharPool.LOWER_CASE_M);
-
-			waveHeightTableRow.addView(linearLayoutFactory(heightImage, heightTxtView));
-
-			ImageView waveDirectionImage = imageViewFactory(forecast.getWaveDirection().getDrawable(getActivity()));
-			// ImageView waveDirectionImage = imageViewFactory(getResources().getDrawable(R.drawable.direction));
-			TextView waveDirectionTxtView = textViewFactory(forecast.getWaveDirection().getAcronym().toString());
-			waveDirectionTableRow.addView(linearLayoutFactory(waveDirectionImage, waveDirectionTxtView));
-
-			ImageView unrestImage = imageViewFactory(getResources().getDrawable(R.drawable.unrest));
-			TextView unrestTxtView = textViewFactory(forecast.getUnrest().toString());
-
-			unrestTableRow.addView(linearLayoutFactory(unrestImage, unrestTxtView));
-
-			ImageView windSpeedImage = imageViewFactory(getResources().getDrawable(R.drawable.wind_speed));
-			TextView windSpeedTxtView = textViewFactory(String.valueOf(forecast.getWindSpeed()) + CharPool.LOWER_CASE_K + CharPool.LOWER_CASE_M + CharPool.FORWARD_SLASH + CharPool.LOWER_CASE_H);
-			windSpeedTableRow.addView(linearLayoutFactory(windSpeedImage, windSpeedTxtView));
-
-			ImageView windDirectionImage = imageViewFactory(forecast.getWindDirection().getDrawable(getActivity()));
-			// ImageView windDirectionImage = imageViewFactory(getResources().getDrawable(R.drawable.direction));
-			TextView windDirectionTxtView = textViewFactory(forecast.getWindDirection().getAcronym().toString());
-			windDirectionTableRow.addView(linearLayoutFactory(windDirectionImage, windDirectionTxtView));
-		}
+//		clearTable();
+//
+//		DayForecast dayForecast = completeForecast.getForecastByDay().get(dayIndex);
+//		List<Forecast> forecastList = dayForecast.getForecast();
+//
+//		TableRow waveHeightTableRow = (TableRow) view.findViewById(R.id.waveHeightTableRow);
+//		TableRow waveDirectionTableRow = (TableRow) view.findViewById(R.id.waveDirectionTableRow);
+//		TableRow unrestTableRow = (TableRow) view.findViewById(R.id.unrestTableRow);
+//		TableRow windSpeedTableRow = (TableRow) view.findViewById(R.id.windSpeedTableRow);
+//		TableRow windDirectionTableRow = (TableRow) view.findViewById(R.id.windDirectionTableRow);
+//
+//		for (Forecast forecast : forecastList) {
+//
+//			ImageView heightImage = imageViewFactory(getResources().getDrawable(R.drawable.wave_height));
+//			TextView heightTxtView = textViewFactory(String.valueOf(forecast.getWaveHeight()) + CharPool.LOWER_CASE_M);
+//
+//			waveHeightTableRow.addView(linearLayoutFactory(heightImage, heightTxtView));
+//
+//			ImageView waveDirectionImage = imageViewFactory(forecast.getWaveDirection().getDrawable(getActivity()));
+//			// ImageView waveDirectionImage = imageViewFactory(getResources().getDrawable(R.drawable.direction));
+//			TextView waveDirectionTxtView = textViewFactory(forecast.getWaveDirection().getAcronym().toString());
+//			waveDirectionTableRow.addView(linearLayoutFactory(waveDirectionImage, waveDirectionTxtView));
+//
+//			ImageView unrestImage = imageViewFactory(getResources().getDrawable(R.drawable.unrest));
+//			TextView unrestTxtView = textViewFactory(forecast.getUnrest().toString());
+//
+//			unrestTableRow.addView(linearLayoutFactory(unrestImage, unrestTxtView));
+//
+//			ImageView windSpeedImage = imageViewFactory(getResources().getDrawable(R.drawable.wind_speed));
+//			TextView windSpeedTxtView = textViewFactory(String.valueOf(forecast.getWindSpeed()) + CharPool.LOWER_CASE_K + CharPool.LOWER_CASE_M + CharPool.FORWARD_SLASH + CharPool.LOWER_CASE_H);
+//			windSpeedTableRow.addView(linearLayoutFactory(windSpeedImage, windSpeedTxtView));
+//
+//			ImageView windDirectionImage = imageViewFactory(forecast.getWindDirection().getDrawable(getActivity()));
+//			// ImageView windDirectionImage = imageViewFactory(getResources().getDrawable(R.drawable.direction));
+//			TextView windDirectionTxtView = textViewFactory(forecast.getWindDirection().getAcronym().toString());
+//			windDirectionTableRow.addView(linearLayoutFactory(windDirectionImage, windDirectionTxtView));
+//		}
 	}
 
 	protected void loadView(int position) {
@@ -350,18 +350,18 @@ public class ForecastFragment extends Fragment {
 
 	private void clearTable() {
 
-		List<TableRow> viewsToClean = new ArrayList();
-
-		viewsToClean.add((TableRow) view.findViewById(R.id.waveHeightTableRow));
-		viewsToClean.add((TableRow) view.findViewById(R.id.waveDirectionTableRow));
-		viewsToClean.add((TableRow) view.findViewById(R.id.unrestTableRow));
-		viewsToClean.add((TableRow) view.findViewById(R.id.windSpeedTableRow));
-		viewsToClean.add((TableRow) view.findViewById(R.id.windDirectionTableRow));
-
-		for (TableRow tableRow : viewsToClean) {
-
-			clearTableRow(tableRow);
-		}
+//		List<TableRow> viewsToClean = new ArrayList();
+//
+//		viewsToClean.add((TableRow) view.findViewById(R.id.waveHeightTableRow));
+//		viewsToClean.add((TableRow) view.findViewById(R.id.waveDirectionTableRow));
+//		viewsToClean.add((TableRow) view.findViewById(R.id.unrestTableRow));
+//		viewsToClean.add((TableRow) view.findViewById(R.id.windSpeedTableRow));
+//		viewsToClean.add((TableRow) view.findViewById(R.id.windDirectionTableRow));
+//
+//		for (TableRow tableRow : viewsToClean) {
+//
+//			clearTableRow(tableRow);
+//		}
 	}
 
 	private void clearTableRow(TableRow tableRow) {
@@ -371,11 +371,11 @@ public class ForecastFragment extends Fragment {
 
 	private void fillCityInfo() {
 
-		TextView breadcrumbLabel = (TextView) view.findViewById(R.id.breadcrumbLabel);
-
-		String breadcrumbText = getBreadcrumbText();
-
-		breadcrumbLabel.setText(breadcrumbText);
+//		TextView breadcrumbLabel = (TextView) view.findViewById(R.id.breadcrumbLabel);
+//
+//		String breadcrumbText = getBreadcrumbText();
+//
+//		breadcrumbLabel.setText(breadcrumbText);
 	}
 
 	private String getBreadcrumbText() {

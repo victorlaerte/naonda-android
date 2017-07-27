@@ -21,7 +21,7 @@ public class WebServiceData {
 
 	private static final String LOG_TAG = WebServiceData.class.getName();
 
-	private static InputStream read(String uri) throws MalformedURLException, IOException {
+	private static InputStream read(String uri) throws IOException {
 
 		URL url = new URL(uri);
 

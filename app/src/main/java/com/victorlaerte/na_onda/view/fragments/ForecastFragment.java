@@ -1,26 +1,20 @@
 package com.victorlaerte.na_onda.view.fragments;
 
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,12 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ShareActionProvider;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -45,13 +35,13 @@ import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.model.DayForecast;
 import com.victorlaerte.na_onda.model.DayOfWeek;
 import com.victorlaerte.na_onda.model.Forecast;
-import com.victorlaerte.na_onda.model.impl.CityImpl;
 import com.victorlaerte.na_onda.model.impl.CustomPagerAdapter;
 import com.victorlaerte.na_onda.tasks.ForecastTask;
 import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CharPool;
 import com.victorlaerte.na_onda.util.Constants;
 import com.victorlaerte.na_onda.util.ContentTypeUtil;
+import com.victorlaerte.na_onda.util.ViewUtil;
 import com.victorlaerte.na_onda.util.Validator;
 import com.victorlaerte.na_onda.view.activities.MainViewActivity;
 
@@ -157,6 +147,7 @@ public class ForecastFragment extends Fragment {
 		Log.d(LOG_TAG, event.getCompleteForecast().toString());
 
 		setupTabLayout();
+		setupTableLayout();
 	}
 
 	@Override
@@ -276,13 +267,38 @@ public class ForecastFragment extends Fragment {
 //		});
 	}
 
-	private void fillTable(int dayIndex) {
+	private void setupTableLayout() {
 
-//		clearTable();
-//
-//		DayForecast dayForecast = completeForecast.getForecastByDay().get(dayIndex);
-//		List<Forecast> forecastList = dayForecast.getForecast();
-//
+		clearTable();
+
+		DayForecast dayForecast = completeForecast.getForecastByDay().get(0);
+		List<Forecast> forecastList = dayForecast.getForecast();
+		Context context = getContext();
+
+		LinearLayout tableContent = (LinearLayout) view.findViewById(R.id.table_content);
+
+		DecimalFormat formatter = new DecimalFormat("00");
+
+		for (Forecast forecast :forecastList) {
+
+			LinearLayout row = ViewUtil.createRow(context, 6);
+
+			row.addView(
+				ViewUtil.createTextViewCell(context, formatter.format(forecast.getHour())));
+			row.addView(
+				ViewUtil.createTextViewCell(context, String.valueOf(forecast.getWaveHeight())));
+			row.addView(
+				ViewUtil.createTextViewCell(context, forecast.getWaveDirection().getAcronym()));
+			row.addView(
+				ViewUtil.createTextViewCell(context, forecast.getUnrest()));
+			row.addView(
+				ViewUtil.createTextViewCell(context, String.valueOf(forecast.getWindSpeed())));
+			row.addView(
+				ViewUtil.createTextViewCell(context, String.valueOf(forecast.getWindDirection().getAcronym())));
+
+			tableContent.addView(row);
+		}
+
 //		TableRow waveHeightTableRow = (TableRow) view.findViewById(R.id.waveHeightTableRow);
 //		TableRow waveDirectionTableRow = (TableRow) view.findViewById(R.id.waveDirectionTableRow);
 //		TableRow unrestTableRow = (TableRow) view.findViewById(R.id.unrestTableRow);
@@ -319,7 +335,7 @@ public class ForecastFragment extends Fragment {
 
 	protected void loadView(int position) {
 
-		fillTable(position);
+//		fillTable(position);
 
 		showGraph(position);
 	}

@@ -59,7 +59,7 @@
 					android:id="@+id/search_btn"
 					android:layout_width="match_parent"
 					android:layout_height="70dp"
-					android:background="@color/light_blue"
+					android:background="@color/button_color"
 					android:textColor="@color/white"
 					android:textSize="20sp"
 					android:layout_marginTop="50dp"

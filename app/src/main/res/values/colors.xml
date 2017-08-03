@@ -2,9 +2,12 @@
 <resources>
     <color name="heavy_blue">#3374ba</color>
     <color name="light_blue">#478fcc</color>
+    <color name="light_blue_alpha_90">#e6478fcc</color>
+    <color name="light_blue_alpha_50">#80478fcc</color>
     <color name="white">#ffffff</color>
-    <color name="colorPrimary">#7eb9c6</color>
-    <color name="colorPrimaryDark">#6c9ea9</color>
+    <color name="seaBlue">#7eb9c6</color>
+    <color name="colorPrimary">#478fcc</color>
+    <color name="colorPrimaryDark">#3374ba</color>
     <color name="colorAccent">#fffcd4</color>
     <color name="colorSnow">#FFF</color>
 </resources>

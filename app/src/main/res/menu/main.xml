@@ -4,6 +4,12 @@
     tools:context="com.victorlaerte.MainActivity" >
 
     <item
+        android:id="@+id/add_bookmark"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_menu_bookmark"
+        android:title="@string/action_add_favorite"/>
+
+    <item
             android:id="@+id/menu_item_share"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_actionbar_share"

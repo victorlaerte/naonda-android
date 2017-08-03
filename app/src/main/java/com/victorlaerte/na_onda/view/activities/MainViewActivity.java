@@ -36,6 +36,7 @@ import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.victorlaerte.na_onda.R;
@@ -67,6 +68,7 @@ public class MainViewActivity extends AppCompatActivity {
 		 */
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
+		Fresco.initialize(this);
 
 		setContentView(R.layout.activity_main);
 

@@ -1,13 +1,7 @@
 package com.victorlaerte.na_onda.view.fragments;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -15,32 +9,27 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ShareActionProvider;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.victorlaerte.na_onda.R;
 import com.victorlaerte.na_onda.model.City;
-import com.victorlaerte.na_onda.model.CompleteForecast;
-import com.victorlaerte.na_onda.tasks.ForecastTask;
 import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CityUtil;
-import com.victorlaerte.na_onda.util.Constants;
-import com.victorlaerte.na_onda.util.ContentTypeUtil;
 import com.victorlaerte.na_onda.util.ExtensionUtil;
 import com.victorlaerte.na_onda.util.NaOndaUtil;
 import com.victorlaerte.na_onda.util.StringPool;
-import com.victorlaerte.na_onda.util.Validator;
-import com.victorlaerte.na_onda.view.activities.MainViewActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SelectionFragment extends Fragment {
 
@@ -146,6 +135,7 @@ public class SelectionFragment extends Fragment {
 				}
 			}
 		});
+
 	}
 
 	private void openForecastFragment() {
@@ -160,41 +150,6 @@ public class SelectionFragment extends Fragment {
 		transaction.replace(R.id.content_frame, forecastFragment, forecastFragment.getClass().getName());
 		transaction.addToBackStack(SelectionFragment.class.getName());
 		transaction.commitAllowingStateLoss();
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-		setShareOptions();
-
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	private void setShareOptions() {
-
-		Activity activity = getActivity();
-
-		if (activity instanceof MainViewActivity) {
-			MainViewActivity mainViewActivity = (MainViewActivity) activity;
-
-			ShareActionProvider mShareActionProvider = mainViewActivity.getmShareActionProvider();
-
-			if (Validator.isNotNull(mShareActionProvider)) {
-
-				String textToShare = AndroidUtil.getString(getActivity(), R.string.shareTextSelectionFrag) + Constants.GOOGLE_PLAY_URL + mainViewActivity
-					.getPackageName();
-
-				Intent shareIntent = new Intent();
-
-				shareIntent.setAction(Intent.ACTION_SEND);
-				shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-					AndroidUtil.getString(getActivity(), R.string.shareSubjectSelectionFrag));
-				shareIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
-				shareIntent.setType(ContentTypeUtil.TEXT_PLAIN);
-
-				mainViewActivity.setShareIntent(shareIntent);
-			}
-		}
 	}
 
 	private ArrayList<HashMap<String, String>> getDefaultCityAdapterList() {
@@ -268,22 +223,5 @@ public class SelectionFragment extends Fragment {
 
 		return item;
 	}
-
-//	@Override
-//	public void onSaveInstanceState(Bundle savedState) {
-//
-//		super.onSaveInstanceState(savedState);
-//
-//		savedState.putParcelable(Constants.CITY_KEY, currentSelectedCity);
-//	}
-//
-//	@Override
-//	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//
-//		super.onRestoreInstanceState(savedInstanceState);
-//
-//		City lastSelectedCity = savedInstanceState.getParcelable(Constants.CITY_KEY);
-//		setCurrentSelectedCity(lastSelectedCity);
-//	}
 
 }

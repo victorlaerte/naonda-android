@@ -1,34 +1,26 @@
 package com.victorlaerte.na_onda.view.fragments;
 
-import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ShareActionProvider;
-import android.widget.TableRow;
-import android.widget.TextView;
 
+import com.scalified.fab.ActionButton;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 import com.victorlaerte.na_onda.R;
 import com.victorlaerte.na_onda.events.ForecastLoadEvent;
 import com.victorlaerte.na_onda.model.City;
@@ -42,13 +34,19 @@ import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CharPool;
 import com.victorlaerte.na_onda.util.Constants;
 import com.victorlaerte.na_onda.util.ContentTypeUtil;
-import com.victorlaerte.na_onda.util.ViewUtil;
 import com.victorlaerte.na_onda.util.Validator;
+import com.victorlaerte.na_onda.util.ViewUtil;
 import com.victorlaerte.na_onda.view.activities.MainViewActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ForecastFragment extends Fragment {
 
@@ -58,11 +56,13 @@ public class ForecastFragment extends Fragment {
 	private ViewPager mViewPager;
 	private Toolbar toolbar;
 	private TabLayout tabLayout;
+	private ActionButton actionButton;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
 
 		view = inflater.inflate(R.layout.fragment_forecast, container, false);
+		actionButton = (ActionButton) view.findViewById(R.id.action_button);
 
 		if (state == null) {
 
@@ -76,7 +76,55 @@ public class ForecastFragment extends Fragment {
 
 		setupLayout();
 
+		actionButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				DayForecast dayForecast = completeForecast.getForecastByDay().get(tabLayout.getSelectedTabPosition());
+
+				List<String> imagesUrl = dayForecast.getGraphUrlList();
+				new ImageViewer.Builder(getContext(), imagesUrl)
+					.setStartPosition(0)
+					.show();
+			}
+		});
+
 		return view;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+		setShareOptions();
+
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	private void setShareOptions() {
+
+		Activity activity = getActivity();
+
+		if (activity instanceof MainViewActivity) {
+			MainViewActivity mainViewActivity = (MainViewActivity) activity;
+
+			ShareActionProvider mShareActionProvider = mainViewActivity.getmShareActionProvider();
+
+			if (Validator.isNotNull(mShareActionProvider)) {
+
+				String textToShare = AndroidUtil.getString(getActivity(), R.string.shareTextSelectionFrag) + Constants.GOOGLE_PLAY_URL + mainViewActivity
+					.getPackageName();
+
+				Intent shareIntent = new Intent();
+
+				shareIntent.setAction(Intent.ACTION_SEND);
+				shareIntent.putExtra(Intent.EXTRA_SUBJECT,
+					AndroidUtil.getString(getActivity(), R.string.shareSubjectSelectionFrag));
+				shareIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
+				shareIntent.setType(ContentTypeUtil.TEXT_PLAIN);
+
+				mainViewActivity.setShareIntent(shareIntent);
+			}
+		}
 	}
 
 	private void setupLayout() {
@@ -331,69 +379,6 @@ public class ForecastFragment extends Fragment {
 		return sb.toString();
 	}
 
-	private void addTabsToActionBar() {
-
-//		ActionBar actionBar = getActivity().getActionBar();
-//
-//		actionBar.removeAllTabs();
-//
-//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//		actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.light_blue)));
-//
-//		List<Tab> allTabs = getAllTabs(actionBar);
-//
-//		for (int i = 0; i < allTabs.size(); i++) {
-//
-//			if (i == 0) {
-//				actionBar.addTab(allTabs.get(i), i, true);
-//			} else {
-//				actionBar.addTab(allTabs.get(i), i);
-//			}
-//		}
-	}
-
-//	private List<Tab> getAllTabs(ActionBar actionBar) {
-//
-//		List<Tab> tabs = new ArrayList<ActionBar.Tab>();
-//
-//		List<DayForecast> forecastByDay = completeForecast.getForecastByDay();
-//
-//		for (DayForecast dayForecast : forecastByDay) {
-//
-//			tabs.add(getTab(actionBar, dayForecast));
-//		}
-//
-//		return tabs;
-//	}
-
-//	private Tab getTab(ActionBar actionBar, final DayForecast dayForecast) {
-//
-//		final Tab tab = actionBar.newTab();
-//
-//		tab.setText(getDayWithMonth(dayForecast.getDay()));
-//		tab.setTabListener(new TabListener() {
-//
-//			@Override
-//			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-//
-//			}
-//
-//			@Override
-//			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-//
-//				setShareOptions(tab.getPosition());
-//				loadView(tab.getPosition());
-//			}
-//
-//			@Override
-//			public void onTabReselected(Tab tab, FragmentTransaction ft) {
-//
-//			}
-//		});
-//
-//		return tab;
-//	}
-
 	private DayOfWeek getDayOfWeek(Calendar calendar) {
 
 		int day = calendar.get(Calendar.DAY_OF_WEEK);
@@ -423,16 +408,5 @@ public class ForecastFragment extends Fragment {
 		sb.append("/");
 		sb.append(String.valueOf(calendar.get(Calendar.YEAR)));
 		return sb.toString();
-	}
-
-	@Override
-	public void onDestroy() {
-
-//		ActionBar actionBar = getActivity().getActionBar();
-//		actionBar.removeAllTabs();
-//		actionBar.setStackedBackgroundDrawable(null);
-//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-
-		super.onDestroy();
 	}
 }

@@ -176,4 +176,16 @@
 
     </ScrollView>
 
+    <com.scalified.fab.ActionButton
+        android:id="@+id/action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        app:button_color="@color/light_blue_alpha_90"
+        app:button_colorPressed="@color/light_blue_alpha_50"
+        app:image="@drawable/ic_table_big_wave"/>
+
 </RelativeLayout>

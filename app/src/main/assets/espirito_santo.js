@@ -19,12 +19,6 @@
       "region": "sud"
     },
     {
-      "nome": "Fundão",
-      "uf": "ES",
-      "id": "2085",
-      "region": "sud"
-    },
-    {
       "nome": "Guarapari",
       "uf": "ES",
       "id": "2231",

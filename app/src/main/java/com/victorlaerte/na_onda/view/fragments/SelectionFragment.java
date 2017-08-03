@@ -208,9 +208,9 @@ public class SelectionFragment extends Fragment {
 	private void setCityAdapter(ArrayList<HashMap<String, String>> adapterList) {
 		String[] from = new String[]{CityUtil.NAME_KEY};
 		int[] to = new int[]{R.id.text1};
-		int layoutNativo = R.layout.spinner_item;
+		int nativeLayout = R.layout.spinner_item;
 
-		citySpinner.setAdapter(new SimpleAdapter(getActivity(), adapterList, layoutNativo, from, to));
+		citySpinner.setAdapter(new SimpleAdapter(getActivity(), adapterList, nativeLayout, from, to));
 	}
 
 	private HashMap<String, String> getItem(String name, String uf, String id, String key) {

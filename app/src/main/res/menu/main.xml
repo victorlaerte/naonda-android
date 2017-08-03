@@ -1,19 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+      xmlns:tools="http://schemas.android.com/tools"
       xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.victorlaerte.MainActivity" >
+      tools:context="com.victorlaerte.MainActivity" >
 
     <item
-        android:id="@+id/add_bookmark"
+        android:id="@+id/menu_add_bookmark"
         app:showAsAction="always"
-        android:icon="@drawable/ic_menu_bookmark"
-        android:title="@string/action_add_favorite"/>
+        android:icon="@drawable/ic_actionbar_bookmark_border"
+        android:title="@string/action_add_bookmark"/>
 
     <item
             android:id="@+id/menu_item_share"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_actionbar_share"
             android:title="@string/share"
-            android:actionProviderClass="android.widget.ShareActionProvider" />
+            app:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
 
 </menu>

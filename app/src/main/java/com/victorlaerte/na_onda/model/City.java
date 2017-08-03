@@ -8,22 +8,22 @@ public interface City extends Parcelable {
 
 	String SELECTED_CITY = "selectedCity";
 
-	public String getName();
+	String getName();
 
-	public void setName(String name);
+	void setName(String name);
 
-	public String getUf();
+	String getUf();
 
-	public void setUf(String uf);
+	void setUf(String uf);
 
-	public String getId();
+	String getId();
 
-	public String getRegionAlias();
+	String getRegionAlias();
 
-	public String getKey();
+	String getKey();
 
-	public String getResourceName();
+	String getResourceName();
 
-	public String getSharedPreferencesId();
+	String getSharedPreferencesId();
 
 }

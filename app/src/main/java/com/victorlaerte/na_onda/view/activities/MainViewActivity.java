@@ -16,14 +16,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,13 +30,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.victorlaerte.na_onda.R;
 import com.victorlaerte.na_onda.model.City;
 import com.victorlaerte.na_onda.tasks.ForecastTask;
@@ -57,15 +53,12 @@ public class MainViewActivity extends AppCompatActivity {
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private Menu menu;
-	private ShareActionProvider mShareActionProvider;
+	private ShareActionProvider shareActionProvider;
 	private Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		/*
-		 * Order must to be respected
-		 */
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
 		Fresco.initialize(this);
@@ -88,6 +81,10 @@ public class MainViewActivity extends AppCompatActivity {
 //		mAdView.loadAd(adRequest);
 	}
 
+	public ShareActionProvider getShareActionProvider() {
+		return shareActionProvider;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -98,17 +95,17 @@ public class MainViewActivity extends AppCompatActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 
-//		MenuItem item = menu.findItem(R.id.menu_item_share);
-//
-//		setmShareActionProvider((ActionProvider) MenuItemCompat.getActionProvider(item));
+		MenuItem item = menu.findItem(R.id.menu_item_share);
+
+		shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	public void setShareIntent(Intent shareIntent) {
 
-		if (Validator.isNotNull(getmShareActionProvider())) {
-			getmShareActionProvider().setShareIntent(shareIntent);
+		if (Validator.isNotNull(shareActionProvider)) {
+			shareActionProvider.setShareIntent(shareIntent);
 		}
 	}
 
@@ -283,15 +280,5 @@ public class MainViewActivity extends AppCompatActivity {
 				super.onBackPressed();
 			}
 		}
-	}
-
-	public ShareActionProvider getmShareActionProvider() {
-
-		return mShareActionProvider;
-	}
-
-	private void setmShareActionProvider(ShareActionProvider mShareActionProvider) {
-
-		this.mShareActionProvider = mShareActionProvider;
 	}
 }

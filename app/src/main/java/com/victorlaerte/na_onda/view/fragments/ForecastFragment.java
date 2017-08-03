@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -14,10 +16,11 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ShareActionProvider;
+import android.support.v7.widget.ShareActionProvider;
 
 import com.scalified.fab.ActionButton;
 import com.stfalcon.frescoimageviewer.ImageViewer;
@@ -57,6 +60,7 @@ public class ForecastFragment extends Fragment {
 	private Toolbar toolbar;
 	private TabLayout tabLayout;
 	private ActionButton actionButton;
+	private MenuItem addBookmarkMenu;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
@@ -75,6 +79,7 @@ public class ForecastFragment extends Fragment {
 		}
 
 		setupLayout();
+		setHasOptionsMenu(true);
 
 		actionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -95,36 +100,52 @@ public class ForecastFragment extends Fragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-		setShareOptions();
+		addBookmarkMenu = menu.findItem(R.id.menu_add_bookmark);
+
+		if (addBookmarkMenu != null) {
+
+			addBookmarkMenu.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+
+					SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_FILE, getActivity().MODE_PRIVATE);
+					final Set<String> stringSet = prefs.getStringSet(City.SHARED_PREFS_FAV_CITIES, new HashSet<String>());
+
+					SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.PREFS_FILE,
+						getActivity().MODE_PRIVATE).edit();
+
+					String sharedPreferencesId = completeForecast.getCity().getSharedPreferencesId();
+					Set<String> newStringSet = new HashSet<>();
+					newStringSet.addAll(stringSet);
+
+					if (!newStringSet.contains(completeForecast.getCity().getSharedPreferencesId())) {
+						newStringSet.add(sharedPreferencesId);
+						editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
+
+						updateBookmark(R.drawable.ic_menu_bookmark);
+						showSnackbar(R.string.bookmark_added);
+
+					} else {
+						newStringSet.remove(sharedPreferencesId);
+						editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
+
+						updateBookmark(R.drawable.ic_actionbar_bookmark_border);
+						showSnackbar(R.string.bookmark_removed);
+					}
+
+					editor.commit();
+
+					return true;
+				}
+			});
+		}
 
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-	private void setShareOptions() {
-
-		Activity activity = getActivity();
-
-		if (activity instanceof MainViewActivity) {
-			MainViewActivity mainViewActivity = (MainViewActivity) activity;
-
-			ShareActionProvider mShareActionProvider = mainViewActivity.getmShareActionProvider();
-
-			if (Validator.isNotNull(mShareActionProvider)) {
-
-				String textToShare = AndroidUtil.getString(getActivity(), R.string.shareTextSelectionFrag) + Constants.GOOGLE_PLAY_URL + mainViewActivity
-					.getPackageName();
-
-				Intent shareIntent = new Intent();
-
-				shareIntent.setAction(Intent.ACTION_SEND);
-				shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-					AndroidUtil.getString(getActivity(), R.string.shareSubjectSelectionFrag));
-				shareIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
-				shareIntent.setType(ContentTypeUtil.TEXT_PLAIN);
-
-				mainViewActivity.setShareIntent(shareIntent);
-			}
-		}
+	private void showSnackbar(int bookmark_added) {
+		Snackbar snackbar = Snackbar.make(view, bookmark_added, Snackbar.LENGTH_SHORT);
+		snackbar.show();
 	}
 
 	private void setupLayout() {
@@ -162,12 +183,10 @@ public class ForecastFragment extends Fragment {
 
 			@Override
 			public void onTabUnselected(TabLayout.Tab tab) {
-
 			}
 
 			@Override
 			public void onTabReselected(TabLayout.Tab tab) {
-
 			}
 		});
 	}
@@ -179,8 +198,27 @@ public class ForecastFragment extends Fragment {
 		this.completeForecast = event.getCompleteForecast();
 		toolbar.setTitle(getBreadcrumbText());
 
+		setupBookmarkItem();
 		setupTabLayout();
 		setupTableLayout();
+		setShareForecastOptions(tabLayout.getSelectedTabPosition());
+
+	}
+
+	private void setupBookmarkItem() {
+
+		SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_FILE, getActivity().MODE_PRIVATE);
+		final Set<String> stringSet = prefs.getStringSet(City.SHARED_PREFS_FAV_CITIES, new HashSet<String>());
+
+		if (stringSet.contains(completeForecast.getCity().getSharedPreferencesId())) {
+			updateBookmark(R.drawable.ic_menu_bookmark);
+		}
+	}
+
+	private void updateBookmark(@DrawableRes int icon) {
+		if (addBookmarkMenu != null) {
+			addBookmarkMenu.setIcon(icon);
+		}
 	}
 
 	@Override
@@ -197,7 +235,7 @@ public class ForecastFragment extends Fragment {
 		EventBus.getDefault().unregister(this);
 	}
 
-	private void setShareOptions(int dayIndex) {
+	private void setShareForecastOptions(int dayIndex) {
 
 		DayForecast dayForecast = completeForecast.getForecastByDay().get(dayIndex);
 
@@ -207,7 +245,7 @@ public class ForecastFragment extends Fragment {
 
 			MainViewActivity mainViewActivity = (MainViewActivity) activity;
 
-			ShareActionProvider mShareActionProvider = mainViewActivity.getmShareActionProvider();
+			ShareActionProvider mShareActionProvider = mainViewActivity.getShareActionProvider();
 
 			if (Validator.isNotNull(mShareActionProvider)) {
 
@@ -259,45 +297,6 @@ public class ForecastFragment extends Fragment {
 
 	private void addListners() {
 
-		SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_FILE, getActivity().MODE_PRIVATE);
-		final Set<String> stringSet = prefs.getStringSet(City.SHARED_PREFS_FAV_CITIES, new HashSet<String>());
-
-//		CheckBox checkBoxFav = (CheckBox) view.findViewById(R.id.addFav);
-//
-//		if (stringSet.contains(completeForecast.getCity().getSharedPreferencesId())) {
-//			checkBoxFav.setChecked(true);
-//		}
-
-//		checkBoxFav.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//
-//			@Override
-//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//				SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.PREFS_FILE,
-//					getActivity().MODE_PRIVATE).edit();
-//
-//				String sharedPreferencesId = completeForecast.getCity().getSharedPreferencesId();
-//
-//				Set<String> newStringSet = new HashSet<String>();
-//
-//				newStringSet.addAll(stringSet);
-//
-//				if (isChecked) {
-//
-//					newStringSet.add(sharedPreferencesId);
-//					editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
-//
-//				} else {
-//
-//					if (newStringSet.contains(sharedPreferencesId)) {
-//						newStringSet.remove(sharedPreferencesId);
-//						editor.putStringSet(City.SHARED_PREFS_FAV_CITIES, newStringSet);
-//					}
-//				}
-//
-//				editor.commit();
-//			}
-//		});
 	}
 
 	private void setupTableLayout() {

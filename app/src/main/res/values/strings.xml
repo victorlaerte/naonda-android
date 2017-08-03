@@ -10,7 +10,7 @@
     <string name="forecast">Previsão</string>
     <string name="action_settings">Settings</string>
     <string name="action_favorite">Favoritos</string>
-    <string name="action_add_favorite">Adicionar aos Favoritos</string>
+    <string name="action_add_bookmark">Adicionar aos Favoritos</string>
     <string name="action_rating">Avalie-nos</string>
     <string name="action_about">Sobre nós</string>
 
@@ -51,8 +51,10 @@
     <string name="error_select_city">Erro! Vocë deve selecionar uma cidade</string>
     <string name="getting_forecast">Consultando Previsão</string>
 
-    <string name="add_favorites">Adicionar aos Favoritos</string>
-    
+    <string name="add_bookmark">Adicionar aos Favoritos</string>
+    <string name="bookmark_added">Adicionado aos Favoritos</string>
+    <string name="bookmark_removed">Removido dos Favoritos</string>
+
     <string name="error_unknow_contact_admin_with_msg">Erro desconhecido, contate o administrador e informe o seguinte erro: </string>
     
     <string name="N">Norte</string>

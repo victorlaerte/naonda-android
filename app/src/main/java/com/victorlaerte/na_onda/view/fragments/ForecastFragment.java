@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.support.v7.widget.ShareActionProvider;
 
 import com.scalified.fab.ActionButton;
 import com.stfalcon.frescoimageviewer.ImageViewer;
@@ -31,7 +30,6 @@ import com.victorlaerte.na_onda.model.CompleteForecast;
 import com.victorlaerte.na_onda.model.DayForecast;
 import com.victorlaerte.na_onda.model.DayOfWeek;
 import com.victorlaerte.na_onda.model.Forecast;
-import com.victorlaerte.na_onda.model.impl.CustomPagerAdapter;
 import com.victorlaerte.na_onda.tasks.ForecastTask;
 import com.victorlaerte.na_onda.util.AndroidUtil;
 import com.victorlaerte.na_onda.util.CharPool;
@@ -56,7 +54,6 @@ public class ForecastFragment extends Fragment {
 	private static final String LOG_TAG = ForecastFragment.class.getName();
 	private CompleteForecast completeForecast;
 	private View view;
-	private ViewPager mViewPager;
 	private Toolbar toolbar;
 	private TabLayout tabLayout;
 	private ActionButton actionButton;
@@ -333,33 +330,6 @@ public class ForecastFragment extends Fragment {
 		row.addView(ViewUtil.createTextViewWithImage(
 				context, forecast.getWindDirection().getAcronym(),
 				forecast.getWaveDirection().getDrawable(getActivity())));
-	}
-
-	private void showGraph(int position) {
-
-		clearGraph();
-
-		DayForecast dayForecast = completeForecast.getForecastByDay().get(position);
-
-		List<String> graphUrlList = dayForecast.getGraphUrlList();
-
-		CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getActivity(), graphUrlList);
-
-		if (Validator.isNull(mViewPager)) {
-
-//			mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-		}
-
-		mViewPager.setAdapter(mCustomPagerAdapter);
-
-	}
-
-	private void clearGraph() {
-
-		if (Validator.isNotNull(mViewPager)) {
-
-			mViewPager.setAdapter(null);
-		}
 	}
 
 	private void clearTable() {

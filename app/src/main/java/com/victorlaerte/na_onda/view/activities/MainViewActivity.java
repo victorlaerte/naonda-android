@@ -1,13 +1,5 @@
 package com.victorlaerte.na_onda.view.activities;
 
-import io.fabric.sdk.android.Fabric;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
@@ -16,21 +8,18 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.support.v7.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -42,14 +31,22 @@ import com.victorlaerte.na_onda.util.CharPool;
 import com.victorlaerte.na_onda.util.CityUtil;
 import com.victorlaerte.na_onda.util.Constants;
 import com.victorlaerte.na_onda.util.Validator;
+import com.victorlaerte.na_onda.view.fragments.ForecastFragment;
 import com.victorlaerte.na_onda.view.fragments.SelectionFragment;
+import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainViewActivity extends AppCompatActivity {
 
 	private static final String LOG_TAG = MainViewActivity.class.getName();
 
-	private String[] optionsTitles;;
-//	private ListView optionsList;
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private Menu menu;
@@ -115,54 +112,45 @@ public class MainViewActivity extends AppCompatActivity {
 
 		mDrawerToggle = new ActionBarDrawerToggle(
 			this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
 		mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-		optionsTitles = getResources().getStringArray(R.array.tab_options);
+		NavigationView navigationDrawer = (NavigationView) mDrawerLayout.findViewById(R.id.nav_view);
 
-//		optionsList = (ListView) findViewById(R.id.left_drawer);
-//		optionsList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, optionsTitles));
-//
-//		optionsList.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//				/*
-//				 * Favorites
-//				 */
-//				if (id == 0) {
-//
-//					favoritesDialog();
-//				}
-//				/*
-//				 * Rate us
-//				 */
-//				else if (id == 1) {
-//
-//					rateUs();
-//				}
-//				/*
-//				 * About us
-//				 */
-//				else if (id == 2) {
-//
-//					aboutDialog();
-//				}
-//				/*
-//				 * Logout
-//				 */
-//				else if (id == 3) {
-//
-//				}
-//
-//				mDrawerLayout.closeDrawers();
-//			}
-//
-//		});
+		Menu menu = navigationDrawer.getMenu();
+
+		MenuItem bookmarkItem = menu.findItem(R.id.nav_bookmark);
+		bookmarkItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				mDrawerLayout.closeDrawers();
+				openBookmarkDialog();
+				return true;
+			}
+		});
+
+		MenuItem ratingItem = menu.findItem(R.id.nav_rating);
+		ratingItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				mDrawerLayout.closeDrawers();
+				rateUs();
+				return true;
+			}
+		});
+
+		MenuItem aboutItem = menu.findItem(R.id.nav_about);
+		aboutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				mDrawerLayout.closeDrawers();
+				aboutDialog();
+				return true;
+			}
+		});
+
 	}
 
-	private void favoritesDialog() {
+	private void openBookmarkDialog() {
 
 		SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, MODE_PRIVATE);
 		final Set<String> stringSet = prefs.getStringSet(City.SHARED_PREFS_FAV_CITIES, new HashSet<String>());
@@ -176,7 +164,7 @@ public class MainViewActivity extends AppCompatActivity {
 
 			final List<City> favoriteCities = CityUtil.getFavoriteCities(MainViewActivity.this, stringSet);
 
-			List<String> favoriteCitiesLabel = new ArrayList<String>(favoriteCities.size());
+			List<String> favoriteCitiesLabel = new ArrayList<>(favoriteCities.size());
 
 			for (City city : favoriteCities) {
 				StringBuilder sb = new StringBuilder(city.getUf());
@@ -188,37 +176,46 @@ public class MainViewActivity extends AppCompatActivity {
 				favoriteCitiesLabel.add(sb.toString());
 			}
 
-			ListView listView = new ListView(this);
-			listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favoriteCitiesLabel));
-			final Dialog dialog = new Dialog(this);
-			dialog.setTitle(R.string.select_city);
-			dialog.setContentView(listView);
-			dialog.show();
+			ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, favoriteCitiesLabel);
 
-			listView.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-					City city = favoriteCities.get(position);
-
-					dialog.dismiss();
-
-					//TODO: OPEN FORECAST FRAGMENT
-				}
-			});
+			new LovelyChoiceDialog(this)
+				.setTopColorRes(R.color.colorPrimaryDark)
+				.setTitle(R.string.select_city)
+				.setIcon(R.drawable.ic_menu_bookmark)
+				.setItems(adapter, new LovelyChoiceDialog.OnItemSelectedListener<String>() {
+					@Override
+					public void onItemSelected(int position, String item) {
+						City city = favoriteCities.get(position);
+						openForecastFragment(city);
+					}
+				})
+				.show();
 
 		}
 	}
 
+	public void openForecastFragment(City city) {
+		ForecastFragment forecastFragment = new ForecastFragment();
+
+		Bundle args = new Bundle();
+		args.putParcelable(City.SELECTED_CITY, city);
+		forecastFragment.setArguments(args);
+
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+		transaction.replace(R.id.content_frame, forecastFragment, forecastFragment.getClass().getName());
+		transaction.addToBackStack(SelectionFragment.class.getName());
+		transaction.commitAllowingStateLoss();
+	}
+
 	private void aboutDialog() {
 
-		Dialog dialog = new Dialog(MainViewActivity.this);
-
-		dialog.setContentView(R.layout.dialog_about);
-		dialog.setTitle(R.string.aboutTitle);
-
-		dialog.show();
+		new LovelyInfoDialog(this)
+			.setTopColorRes(R.color.colorPrimaryDark)
+			.setIcon(R.drawable.ic_launcher)
+			.setTitle(R.string.aboutTitle)
+			.setMessage(R.string.aboutMsg)
+			.show();
 	}
 
 	private void rateUs() {
@@ -250,16 +247,6 @@ public class MainViewActivity extends AppCompatActivity {
 
 		super.onConfigurationChanged(newConfig);
 		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

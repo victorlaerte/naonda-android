@@ -1,7 +1,6 @@
 package com.victorlaerte.na_onda.view.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -26,6 +25,7 @@ import com.victorlaerte.na_onda.util.CityUtil;
 import com.victorlaerte.na_onda.util.ExtensionUtil;
 import com.victorlaerte.na_onda.util.NaOndaUtil;
 import com.victorlaerte.na_onda.util.StringPool;
+import com.victorlaerte.na_onda.view.activities.MainViewActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,25 +131,11 @@ public class SelectionFragment extends Fragment {
 
 				} else {
 
-					openForecastFragment();
+					((MainViewActivity) getActivity()).openForecastFragment(selectedCity);
 				}
 			}
 		});
 
-	}
-
-	private void openForecastFragment() {
-		ForecastFragment forecastFragment = new ForecastFragment();
-
-		Bundle args = new Bundle();
-		args.putParcelable(City.SELECTED_CITY, selectedCity);
-		forecastFragment.setArguments(args);
-
-		FragmentTransaction transaction = getActivity().getFragmentManager().beginTransaction();
-
-		transaction.replace(R.id.content_frame, forecastFragment, forecastFragment.getClass().getName());
-		transaction.addToBackStack(SelectionFragment.class.getName());
-		transaction.commitAllowingStateLoss();
 	}
 
 	private ArrayList<HashMap<String, String>> getDefaultCityAdapterList() {

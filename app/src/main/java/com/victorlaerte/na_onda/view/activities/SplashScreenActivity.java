@@ -29,26 +29,6 @@ public class SplashScreenActivity extends FragmentActivity {
 		setContentView(R.layout.activity_splash_screen);
 
 		loadApplicationComponents(savedInstanceState);
-
-		// printKeyHash();
-	}
-
-	private void printKeyHash() {
-
-		// Add code to print out the key hash
-		try {
-			PackageInfo info = getPackageManager().getPackageInfo("com.victorlaerte.na_onda",
-					PackageManager.GET_SIGNATURES);
-			for (Signature signature : info.signatures) {
-				MessageDigest md = MessageDigest.getInstance("SHA");
-				md.update(signature.toByteArray());
-				Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-			}
-		} catch (NameNotFoundException e) {
-			Log.e("KeyHash:", e.toString());
-		} catch (NoSuchAlgorithmException e) {
-			Log.e("KeyHash:", e.toString());
-		}
 	}
 
 	private void loadApplicationComponents(Bundle savedInstanceState) {

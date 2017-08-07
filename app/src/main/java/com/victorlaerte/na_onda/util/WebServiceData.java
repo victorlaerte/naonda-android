@@ -38,18 +38,6 @@ public class WebServiceData {
 		return in;
 	}
 
-	public static Document readDocumentResponse(String uri) throws IOException, ParserConfigurationException,
-			SAXException, JSONException {
-
-		InputStream in = read(uri);
-
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.parse(in);
-
-		return document;
-	}
-
 	public static String readStringResponse(String uri) throws IOException, ParserConfigurationException, SAXException,
 			JSONException {
 

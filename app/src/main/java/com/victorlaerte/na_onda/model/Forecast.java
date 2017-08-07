@@ -8,26 +8,26 @@ import android.os.Parcelable;
 
 public interface Forecast extends Parcelable {
 
-	public static final String DAY_KEY = "dia";
-	public static final String WIND_SPEED_KEY = "vento";
-	public static final String WIND_DIRECTION_KEY = "vento_dir";
-	public static final String WAVE_HEIGHT_KEY = "altura";
-	public static final String WAVE_DIRECTION_KEY = "direcao";
-	public static final String UNREST = "agitacao";
+	String DAY_KEY = "dia";
+	String WIND_SPEED_KEY = "vento";
+	String WIND_DIRECTION_KEY = "vento_dir";
+	String WAVE_HEIGHT_KEY = "altura";
+	String WAVE_DIRECTION_KEY = "direcao";
+	String UNREST = "agitacao";
 
-	public void parseForecast(JSONObject jsonObject) throws JSONException;
+	void parseForecast(JSONObject jsonObject) throws JSONException;
 
-	public double getWaveHeight();
+	double getWaveHeight();
 
-	public CardinalPoints getWaveDirection();
+	CardinalPoints getWaveDirection();
 
-	public double getWindSpeed();
+	double getWindSpeed();
 
-	public CardinalPoints getWindDirection();
+	CardinalPoints getWindDirection();
 
-	public String getUnrest();
+	String getUnrest();
 
-	public int getHour();
+	int getHour();
 
-	public String getSharebleForecast(Context context, String label);
+	String getSharebleForecast(Context context, String label);
 }

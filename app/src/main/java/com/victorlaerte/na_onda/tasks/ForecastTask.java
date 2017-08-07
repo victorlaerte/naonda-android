@@ -75,7 +75,7 @@ public class ForecastTask extends AsyncTask<String, Integer, Boolean> {
 
 		if (Validator.isNotNull(context)) {
 
-			if (AndroidUtil.isNetworkAvaliable(context)) {
+			if (AndroidUtil.isNetworkAvailable(context)) {
 
 				try {
 

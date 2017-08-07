@@ -6,10 +6,6 @@ public class NaOndaUtil {
 
 	public static String getStateKey(String stateName) {
 
-		String key = StringPool.BLANK;
-
-		key = StringUtils.stripAccents(stateName).toLowerCase().replaceAll("\\s", "_");
-
-		return key;
+		return StringUtils.stripAccents(stateName).toLowerCase().replaceAll("\\s", "_");
 	}
 }

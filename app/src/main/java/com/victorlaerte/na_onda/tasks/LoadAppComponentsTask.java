@@ -38,7 +38,7 @@ public class LoadAppComponentsTask extends AsyncTask<String, Integer, Boolean> {
 
 		if (Validator.isNotNull(strongActivity)) {
 
-			if (!AndroidUtil.isNetworkAvaliable(strongActivity)) {
+			if (!AndroidUtil.isNetworkAvailable(strongActivity)) {
 
 				errorMsg = AndroidUtil.getString(strongActivity, R.string.error_no_internet_avaliable);
 				return false;

@@ -22,17 +22,6 @@ public class DialogsUtil {
 		showDialog(context, AndroidUtil.getString(context, titleId), message, event);
 	}
 
-	public static void showDialog(Context context, int titleId, int messageId, DialogInterface.OnClickListener event) {
-
-		showDialog(context, AndroidUtil.getString(context, titleId), AndroidUtil.getString(context, messageId),
-			event);
-	}
-
-	public static void showDialog(Context context, String title, int messageId, DialogInterface.OnClickListener event) {
-
-		showDialog(context, title, AndroidUtil.getString(context, messageId), event);
-	}
-
 	public static void showDialog(final Context context, final String title, final String message,
 	                              final DialogInterface.OnClickListener okEvent) {
 
@@ -46,28 +35,6 @@ public class DialogsUtil {
 				.setNeutralButton("OK", finalEvent)
 				.show();
 		}
-	}
-
-	public static void dialogQuestion(final Context context, final int titleId, final String message,
-	                                  final android.content.DialogInterface.OnClickListener positiveEvent,
-	                                  final android.content.DialogInterface.OnClickListener negativeEvent) {
-
-		dialogQuestion(context, AndroidUtil.getString(context, titleId), message, positiveEvent, negativeEvent);
-	}
-
-	public static void dialogQuestion(final Context context, final int titleId, final int messageId,
-	                                  final android.content.DialogInterface.OnClickListener positiveEvent,
-	                                  final android.content.DialogInterface.OnClickListener negativeEvent) {
-
-		dialogQuestion(context, AndroidUtil.getString(context, titleId), AndroidUtil.getString(context, messageId),
-			positiveEvent, negativeEvent);
-	}
-
-	public static void dialogQuestion(final Context context, final String title, final int messageId,
-	                                  final android.content.DialogInterface.OnClickListener positiveEvent,
-	                                  final android.content.DialogInterface.OnClickListener negativeEvent) {
-
-		dialogQuestion(context, title, AndroidUtil.getString(context, messageId), positiveEvent, negativeEvent);
 	}
 
 	public static void dialogQuestion(final Context context, final String title, final String message,

@@ -10,11 +10,11 @@ import android.os.Parcelable;
 
 public interface DayForecast extends Parcelable {
 
-	public void addForecast(JSONObject jsonObject, int hour) throws JSONException;
+	void addForecast(JSONObject jsonObject, int hour) throws JSONException;
 
-	public Calendar getDay();
+	Calendar getDay();
 
-	public List<String> getGraphUrlList();
+	List<String> getGraphUrlList();
 
-	public List<Forecast> getForecast();
+	List<Forecast> getForecast();
 }

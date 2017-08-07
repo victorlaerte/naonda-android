@@ -19,7 +19,7 @@ import com.victorlaerte.na_onda.model.impl.CityImpl;
 
 public class CityUtil {
 
-	private static final String CIDADES_KEY = "cidades";
+	private static final String CITIES_KEY = "cidades";
 	public static final String NAME_KEY = "nome";
 	public static final String UF_KEY = "uf";
 	public static final String ID_KEY = "id";
@@ -41,7 +41,7 @@ public class CityUtil {
 
 			JSONObject jsonObj = new JSONObject(citiesFile);
 
-			JSONArray jsonArray = jsonObj.getJSONArray(CIDADES_KEY);
+			JSONArray jsonArray = jsonObj.getJSONArray(CITIES_KEY);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 
